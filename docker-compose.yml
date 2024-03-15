@@ -1,0 +1,54 @@
+version: "3.5"
+
+# Define a custom bridge network named 'app-net'
+networks:
+  app-net:
+    driver: bridge
+
+# Define services (containers)
+services:
+  # PostgreSQL Database Service
+  db:
+    container_name: pg_database
+    restart: always
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.docker/postgres:/docker-entrypoint-initdb.d # Mount a volume for database initialization scripts
+    networks:
+      - app-net # Connect the service to the 'app-net' network
+
+  # Frontend Service (assumed to be a Next.js application)
+  #front_end:
+  #container_name: front_end
+  #restart: always
+  #build:
+  #   context: ./front # Specify the build context for the frontend Dockerfile
+  #   dockerfile: Dockerfile # Specify the Dockerfile for building the frontend
+  # environment: MUST be set at .dockerfile for Next.js
+  #  ports:
+  #    - "3000:3000"
+  # networks:
+  #   - app-net # Connect the service to the 'app-net' network
+
+  # Backend Service
+  back_end:
+    container_name: back_end
+    restart: always
+    build:
+      context: ./backend # Specify the build context for the backend Dockerfile
+      dockerfile: Dockerfile # Specify the Dockerfile for building the backend
+    environment:
+      POSTGRES_DATABASE_URL: pg_database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db # Depend on the 'db' service, wait for it to be ready before starting
+    networks:
+      - app-net # Connect the service to the 'app-net' network
