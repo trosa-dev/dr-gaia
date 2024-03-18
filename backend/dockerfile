@@ -4,7 +4,7 @@ FROM node:20
 # Create app directory
 WORKDIR /usr/src/app
 
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# Copy package.json and package-lock.json to the workdir
 COPY package*.json ./
 
 # Install app dependencies
@@ -13,14 +13,18 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-# Copy the .env and .env.development files
-#COPY .env .env.development ./
+# Set environment variables
+#ENV DATABASE_URL postgresql://postgres:postgres@pg_database:5432
 
-# Creates a "dist" folder with the production build
+# Install Prisma globally
+RUN npm i prisma -g
+RUN prisma generate
+
+# Build the production version
 RUN npm run build
 
-# Expose the port on which the app will run
-EXPOSE 3001
+# Copy entrypoint script
+COPY .docker/entrypoint.sh entrypoint.sh
 
-# Start the server using the production build
-CMD ["npm", "run", "start:prod"]
+# Set the entrypoint for the Docker container
+ENTRYPOINT ["/bin/sh", "entrypoint.sh"]

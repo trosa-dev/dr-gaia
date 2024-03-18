@@ -2,11 +2,17 @@ import { Injectable } from '@nestjs/common';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as csv from 'csv-parser';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class FileService {
-  getListOfFiles() {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async getListOfFiles() {
     const demoFilesPath = path.resolve('../mimic-demo-files/csv');
+
+    //const teste = await this.prismaService.user.findFirst();
+
     return fs.readdir(demoFilesPath);
   }
 

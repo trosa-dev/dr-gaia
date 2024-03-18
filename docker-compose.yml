@@ -8,7 +8,7 @@ networks:
 # Define services (containers)
 services:
   # PostgreSQL Database Service
-  db:
+  pg_database:
     container_name: pg_database
     restart: always
     image: postgres
@@ -22,19 +22,6 @@ services:
     networks:
       - app-net # Connect the service to the 'app-net' network
 
-  # Frontend Service (assumed to be a Next.js application)
-  #front_end:
-  #container_name: front_end
-  #restart: always
-  #build:
-  #   context: ./front # Specify the build context for the frontend Dockerfile
-  #   dockerfile: Dockerfile # Specify the Dockerfile for building the frontend
-  # environment: MUST be set at .dockerfile for Next.js
-  #  ports:
-  #    - "3000:3000"
-  # networks:
-  #   - app-net # Connect the service to the 'app-net' network
-
   # Backend Service
   back_end:
     container_name: back_end
@@ -43,12 +30,10 @@ services:
       context: ./backend # Specify the build context for the backend Dockerfile
       dockerfile: Dockerfile # Specify the Dockerfile for building the backend
     environment:
-      POSTGRES_DATABASE_URL: pg_database
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      DATABASE_URL: "postgresql://postgres:postgres@pg_database:5432"
     ports:
       - "3001:3001"
     depends_on:
-      - db # Depend on the 'db' service, wait for it to be ready before starting
+      - pg_database # Depend on the 'db' service, wait for it to be ready before starting
     networks:
       - app-net # Connect the service to the 'app-net' network
