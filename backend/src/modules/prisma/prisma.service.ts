@@ -15,6 +15,8 @@ import { loader_drug_exposure } from './loaders/loader_drug_exposure';
 import { loader_fact_relationship } from './loaders/loader_fact_relationship';
 import { loader_location } from './loaders/loader_location';
 import { loader_measurement } from './loaders/loader_measurement';
+import { loader_observation_period } from './loaders/loader_observation_period';
+import { loader_observation } from './loaders/loader_observation';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -58,6 +60,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       //loader not needed for metadata.csv - no data
       //loader not needed for note_nlp.csv - no data
       //loader not needed for note.csv - no data
+      loader_observation_period({ prismaService: this });
+      loader_observation({ prismaService: this });
     } catch (error) {
       console.log(error);
     }
