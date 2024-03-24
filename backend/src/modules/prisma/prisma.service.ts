@@ -17,6 +17,7 @@ import { loader_location } from './loaders/loader_location';
 import { loader_measurement } from './loaders/loader_measurement';
 import { loader_observation_period } from './loaders/loader_observation_period';
 import { loader_observation } from './loaders/loader_observation';
+import { loader_person } from './loaders/loader_person';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -62,6 +63,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       //loader not needed for note.csv - no data
       loader_observation_period({ prismaService: this });
       loader_observation({ prismaService: this });
+      //loader not needed for payer_plan_period.csv - no data
+      loader_person({ prismaService: this });
     } catch (error) {
       console.log(error);
     }
