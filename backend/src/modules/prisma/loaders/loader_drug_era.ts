@@ -17,7 +17,7 @@ export async function loader_drug_era(param: { prismaService: PrismaService }) {
   const { prismaService } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = 'dose_era.csv';
+  const csvId = 'drug_era.csv';
 
   const filePath = path.resolve(
     __dirname,
