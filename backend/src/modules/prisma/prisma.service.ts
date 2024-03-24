@@ -21,6 +21,7 @@ import { loader_person } from './loaders/loader_person';
 import { loader_procedure_occurrence } from './loaders/loader_procedure_occurrence';
 import { loader_specimen } from './loaders/loader_specimen';
 import { loader_visit_detail } from './loaders/loader_visit_detail';
+import { loader_visit_occurrence } from './loaders/loader_visit_occurrence';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -72,6 +73,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       //loader not needed for provider.csv - no data
       loader_specimen({ prismaService: this });
       loader_visit_detail({ prismaService: this });
+      loader_visit_occurrence({ prismaService: this });
     } catch (error) {
       console.log(error);
     }
