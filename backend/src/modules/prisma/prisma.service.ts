@@ -31,6 +31,9 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       //loader not needed for attribute_definition.csv - no data
       loader_care_site({ prismaService: this });
       loader_cdm_source({ prismaService: this });
+      //loader not needed for cohort_attribute.csv - no data
+      //loader not needed for cohort_definition.csv - no data
+      //loader not needed for  cohort.csv - no data
     } catch (error) {
       console.log(error);
     }
