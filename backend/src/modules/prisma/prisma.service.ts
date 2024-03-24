@@ -13,6 +13,7 @@ import { loader_dose_era } from './loaders/loader_dose_era';
 import { loader_drug_era } from './loaders/loader_drug_era';
 import { loader_drug_exposure } from './loaders/loader_drug_exposure';
 import { loader_fact_relationship } from './loaders/loader_fact_relationship';
+import { loader_location } from './loaders/loader_location';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -51,6 +52,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       loader_drug_era({ prismaService: this });
       loader_drug_exposure({ prismaService: this });
       loader_fact_relationship({ prismaService: this });
+      loader_location({ prismaService: this });
     } catch (error) {
       console.log(error);
     }
