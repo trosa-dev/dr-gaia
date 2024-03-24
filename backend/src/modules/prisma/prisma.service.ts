@@ -9,6 +9,7 @@ import { loader_condition_era } from './loaders/loader_condition_era';
 import { loader_condition_occurrence } from './loaders/loader_condition_occurrence.';
 import { loader_death } from './loaders/loader_death';
 import { loader_device_exposure } from './loaders/loader_device_exposure';
+import { loader_dose_era } from './loaders/loader_dose_era';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -43,6 +44,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       //loader not needed for cost.csv - no data
       loader_death({ prismaService: this });
       loader_device_exposure({ prismaService: this });
+      loader_dose_era({ prismaService: this });
     } catch (error) {
       console.log(error);
     }
