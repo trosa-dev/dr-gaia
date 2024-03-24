@@ -35,7 +35,7 @@ export async function loader_drug_exposure(param: {
   const { prismaService } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = 'dose_era.csv';
+  const csvId = 'drug_exposure.csv';
 
   const filePath = path.resolve(
     __dirname,
