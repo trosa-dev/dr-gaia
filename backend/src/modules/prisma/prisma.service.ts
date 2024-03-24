@@ -55,6 +55,9 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       loader_fact_relationship({ prismaService: this });
       loader_location({ prismaService: this });
       loader_measurement({ prismaService: this });
+      //loader not needed for metadata.csv - no data
+      //loader not needed for note_nlp.csv - no data
+      //loader not needed for note.csv - no data
     } catch (error) {
       console.log(error);
     }
