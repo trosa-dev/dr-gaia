@@ -49,6 +49,9 @@ export async function loader_measurement(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
+            // Aguarda 100ms antes de criar o registro
+            await new Promise((resolve) => setTimeout(resolve, 300));
+
             await prismaService.measurement.create({
               data: {
                 measurement_concept_id: data.measurement_concept_id,
