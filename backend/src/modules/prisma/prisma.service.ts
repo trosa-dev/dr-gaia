@@ -7,6 +7,7 @@ import { loader_care_site } from './loaders/loader_care_site';
 import { loader_cdm_source } from './loaders/loader_cdm_source';
 import { loader_condition_era } from './loaders/loader_condition_era';
 import { loader_condition_occurrence } from './loaders/loader_condition_occurrence.';
+import { loader_death } from './loaders/loader_death';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -35,9 +36,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       loader_cdm_source({ prismaService: this });
       //loader not needed for cohort_attribute.csv - no data
       //loader not needed for cohort_definition.csv - no data
-      //loader not needed for  cohort.csv - no data
+      //loader not needed for cohort.csv - no data
       loader_condition_era({ prismaService: this });
       loader_condition_occurrence({ prismaService: this });
+      //loader not needed for cost.csv - no data
+      loader_death({ prismaService: this });
     } catch (error) {
       console.log(error);
     }
