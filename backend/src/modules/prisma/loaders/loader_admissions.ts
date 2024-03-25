@@ -5,15 +5,28 @@ import { PrismaService } from '../prisma.service';
 import { Logger } from '@nestjs/common';
 
 interface CsvData {
-  concept_id_1: string;
-  concept_id_2: string;
-  relationship_id: string;
-  valid_start_DATE: string;
-  valid_end_DATE: string;
-  invalid_reason: string;
+  row_id: string;
+  subject_id: string;
+  hadm_id: string;
+  admittime: string;
+  dischtime: string;
+  deathtime: string;
+  admission_type: string;
+  admission_location: string;
+  discharge_location: string;
+  insurance: string;
+  language: string;
+  religion: string;
+  marital_status: string;
+  ethnicity: string;
+  edregtime: string;
+  edouttime: string;
+  diagnosis: string;
+  hospital_expire_flag: string;
+  has_chartevents_data: string;
 }
 
-export async function loader_2b_concept_relationship(param: {
+export async function loader_admissions(param: {
   prismaService: PrismaService;
   logger: Logger;
   loadedDbs: any[];
@@ -21,7 +34,7 @@ export async function loader_2b_concept_relationship(param: {
   const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = '2b_concept_relationship.csv';
+  const csvId = 'admissions.csv';
 
   const filePath = path.resolve(
     __dirname,
@@ -38,14 +51,27 @@ export async function loader_2b_concept_relationship(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
-            await prismaService.concept_relationship_2b.create({
+            await prismaService.admissions.create({
               data: {
-                concept_id_1: data.concept_id_1,
-                concept_id_2: data.concept_id_2,
-                invalid_reason: data.invalid_reason,
-                relationship_id: data.relationship_id,
-                valid_end_date: data.valid_end_DATE,
-                valid_start_date: data.valid_start_DATE,
+                row_id: data.row_id,
+                admission_location: data.admission_location,
+                admission_type: data.admission_type,
+                admittime: data.admittime,
+                deathtime: data.deathtime,
+                diagnosis: data.diagnosis,
+                discharge_location: data.discharge_location,
+                dischtime: data.dischtime,
+                edouttime: data.edouttime,
+                edregtime: data.edregtime,
+                ethnicity: data.ethnicity,
+                hadm_id: data.hadm_id,
+                has_chartevents_data: data.has_chartevents_data,
+                hospital_expire_flag: data.hospital_expire_flag,
+                insurance: data.insurance,
+                language: data.language,
+                marital_status: data.marital_status,
+                religion: data.religion,
+                subject_id: data.subject_id,
               },
             });
           } catch (error) {

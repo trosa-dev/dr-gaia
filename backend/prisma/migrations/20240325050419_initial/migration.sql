@@ -5,7 +5,8 @@ CREATE TABLE "loader" (
 
 -- CreateTable
 CREATE TABLE "admissions" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "admittime" TEXT NOT NULL,
@@ -25,12 +26,13 @@ CREATE TABLE "admissions" (
     "hospital_expire_flag" TEXT NOT NULL,
     "has_chartevents_data" TEXT NOT NULL,
 
-    CONSTRAINT "admissions_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "admissions_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "callout" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "submit_wardid" TEXT NOT NULL,
@@ -55,22 +57,24 @@ CREATE TABLE "callout" (
     "firstreservationtime" TEXT NOT NULL,
     "currentreservationtime" TEXT NOT NULL,
 
-    CONSTRAINT "callout_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "callout_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "caregivers" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "cgid" TEXT NOT NULL,
     "label" TEXT NOT NULL,
     "description" TEXT NOT NULL,
 
-    CONSTRAINT "caregivers_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "caregivers_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "chartevents" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "icustay_id" TEXT NOT NULL,
@@ -86,12 +90,13 @@ CREATE TABLE "chartevents" (
     "resultstatus" TEXT NOT NULL,
     "stopped" TEXT NOT NULL,
 
-    CONSTRAINT "chartevents_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "chartevents_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "cptevents" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "costcenter" TEXT NOT NULL,
@@ -104,12 +109,13 @@ CREATE TABLE "cptevents" (
     "subsectionheader" TEXT NOT NULL,
     "description" TEXT NOT NULL,
 
-    CONSTRAINT "cptevents_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "cptevents_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "d_cpt" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "category" TEXT NOT NULL,
     "sectionrange" TEXT NOT NULL,
     "sectionheader" TEXT NOT NULL,
@@ -119,32 +125,35 @@ CREATE TABLE "d_cpt" (
     "mincodeinsubsection" TEXT NOT NULL,
     "maxcodeinsubsection" TEXT NOT NULL,
 
-    CONSTRAINT "d_cpt_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "d_cpt_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "d_icd_diagnoses" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "icd9_code" TEXT NOT NULL,
     "short_title" TEXT NOT NULL,
     "long_title" TEXT NOT NULL,
 
-    CONSTRAINT "d_icd_diagnoses_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "d_icd_diagnoses_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "d_icd_procedures" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "icd9_code" TEXT NOT NULL,
     "short_title" TEXT NOT NULL,
     "long_title" TEXT NOT NULL,
 
-    CONSTRAINT "d_icd_procedures_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "d_icd_procedures_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "d_items" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "itemid" TEXT NOT NULL,
     "label" TEXT NOT NULL,
     "abbreviation" TEXT NOT NULL,
@@ -155,24 +164,26 @@ CREATE TABLE "d_items" (
     "param_type" TEXT NOT NULL,
     "conceptid" TEXT NOT NULL,
 
-    CONSTRAINT "d_items_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "d_items_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "d_labitems" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "itemid" TEXT NOT NULL,
     "label" TEXT NOT NULL,
     "fluid" TEXT NOT NULL,
     "category" TEXT NOT NULL,
     "loinc_code" TEXT NOT NULL,
 
-    CONSTRAINT "d_labitems_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "d_labitems_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "datetimeevents" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "icustay_id" TEXT NOT NULL,
@@ -187,23 +198,25 @@ CREATE TABLE "datetimeevents" (
     "resultstatus" TEXT NOT NULL,
     "stopped" TEXT NOT NULL,
 
-    CONSTRAINT "datetimeevents_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "datetimeevents_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "diagnoses_icd" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "seq_num" TEXT NOT NULL,
     "icd9_code" TEXT NOT NULL,
 
-    CONSTRAINT "diagnoses_icd_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "diagnoses_icd_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "drgcodes" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "drg_type" TEXT NOT NULL,
@@ -212,12 +225,13 @@ CREATE TABLE "drgcodes" (
     "drg_severity" TEXT NOT NULL,
     "drg_mortality" TEXT NOT NULL,
 
-    CONSTRAINT "drgcodes_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "drgcodes_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "icustays" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "icustay_id" TEXT NOT NULL,
@@ -230,12 +244,13 @@ CREATE TABLE "icustays" (
     "outtime" TEXT NOT NULL,
     "los" TEXT NOT NULL,
 
-    CONSTRAINT "icustays_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "icustays_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "inputevents_cv" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "icustay_id" TEXT NOT NULL,
@@ -258,12 +273,13 @@ CREATE TABLE "inputevents_cv" (
     "originalrateuom" TEXT NOT NULL,
     "originalsite" TEXT NOT NULL,
 
-    CONSTRAINT "inputevents_cv_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "inputevents_cv_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "inputevents_mv" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "icustay_id" TEXT NOT NULL,
@@ -295,12 +311,13 @@ CREATE TABLE "inputevents_mv" (
     "originalamount" TEXT NOT NULL,
     "originalrate" TEXT NOT NULL,
 
-    CONSTRAINT "inputevents_mv_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "inputevents_mv_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "labevents" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "itemid" TEXT NOT NULL,
@@ -310,12 +327,13 @@ CREATE TABLE "labevents" (
     "valueuom" TEXT NOT NULL,
     "flag" TEXT NOT NULL,
 
-    CONSTRAINT "labevents_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "labevents_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "microbiologyevents" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "chartdate" TEXT NOT NULL,
@@ -332,12 +350,13 @@ CREATE TABLE "microbiologyevents" (
     "dilution_value" TEXT NOT NULL,
     "interpretation" TEXT NOT NULL,
 
-    CONSTRAINT "microbiologyevents_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "microbiologyevents_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "noteevents" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "chartdate" TEXT NOT NULL,
@@ -349,12 +368,13 @@ CREATE TABLE "noteevents" (
     "iserror" TEXT NOT NULL,
     "text" TEXT NOT NULL,
 
-    CONSTRAINT "noteevents_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "noteevents_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "outputevents" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "icustay_id" TEXT NOT NULL,
@@ -368,12 +388,13 @@ CREATE TABLE "outputevents" (
     "newbottle" TEXT NOT NULL,
     "iserror" TEXT NOT NULL,
 
-    CONSTRAINT "outputevents_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "outputevents_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "patients" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "gender" TEXT NOT NULL,
     "dob" TEXT NOT NULL,
@@ -382,12 +403,13 @@ CREATE TABLE "patients" (
     "dod_ssn" TEXT NOT NULL,
     "expire_flag" TEXT NOT NULL,
 
-    CONSTRAINT "patients_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "patients_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "prescriptions" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "icustay_id" TEXT NOT NULL,
@@ -407,12 +429,13 @@ CREATE TABLE "prescriptions" (
     "form_unit_disp" TEXT NOT NULL,
     "route" TEXT NOT NULL,
 
-    CONSTRAINT "prescriptions_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "prescriptions_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "procedureevents_mv" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "icustay_id" TEXT NOT NULL,
@@ -438,35 +461,38 @@ CREATE TABLE "procedureevents_mv" (
     "comments_canceledby" TEXT NOT NULL,
     "comments_date" TEXT NOT NULL,
 
-    CONSTRAINT "procedureevents_mv_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "procedureevents_mv_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "procedures_icd" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "seq_num" TEXT NOT NULL,
     "icd9_code" TEXT NOT NULL,
 
-    CONSTRAINT "procedures_icd_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "procedures_icd_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "services" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "transfertime" TEXT NOT NULL,
     "prev_service" TEXT NOT NULL,
     "curr_service" TEXT NOT NULL,
 
-    CONSTRAINT "services_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "services_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "transfers" (
-    "row_id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
+    "row_id" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
     "hadm_id" TEXT NOT NULL,
     "icustay_id" TEXT NOT NULL,
@@ -480,86 +506,86 @@ CREATE TABLE "transfers" (
     "outtime" TEXT NOT NULL,
     "los" TEXT NOT NULL,
 
-    CONSTRAINT "transfers_pkey" PRIMARY KEY ("row_id")
+    CONSTRAINT "transfers_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "loader_id_key" ON "loader"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "admissions_row_id_key" ON "admissions"("row_id");
+CREATE UNIQUE INDEX "admissions_id_key" ON "admissions"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "callout_row_id_key" ON "callout"("row_id");
+CREATE UNIQUE INDEX "callout_id_key" ON "callout"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "caregivers_row_id_key" ON "caregivers"("row_id");
+CREATE UNIQUE INDEX "caregivers_id_key" ON "caregivers"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "chartevents_row_id_key" ON "chartevents"("row_id");
+CREATE UNIQUE INDEX "chartevents_id_key" ON "chartevents"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "cptevents_row_id_key" ON "cptevents"("row_id");
+CREATE UNIQUE INDEX "cptevents_id_key" ON "cptevents"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "d_cpt_row_id_key" ON "d_cpt"("row_id");
+CREATE UNIQUE INDEX "d_cpt_id_key" ON "d_cpt"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "d_icd_diagnoses_row_id_key" ON "d_icd_diagnoses"("row_id");
+CREATE UNIQUE INDEX "d_icd_diagnoses_id_key" ON "d_icd_diagnoses"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "d_icd_procedures_row_id_key" ON "d_icd_procedures"("row_id");
+CREATE UNIQUE INDEX "d_icd_procedures_id_key" ON "d_icd_procedures"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "d_items_row_id_key" ON "d_items"("row_id");
+CREATE UNIQUE INDEX "d_items_id_key" ON "d_items"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "d_labitems_row_id_key" ON "d_labitems"("row_id");
+CREATE UNIQUE INDEX "d_labitems_id_key" ON "d_labitems"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "datetimeevents_row_id_key" ON "datetimeevents"("row_id");
+CREATE UNIQUE INDEX "datetimeevents_id_key" ON "datetimeevents"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "diagnoses_icd_row_id_key" ON "diagnoses_icd"("row_id");
+CREATE UNIQUE INDEX "diagnoses_icd_id_key" ON "diagnoses_icd"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "drgcodes_row_id_key" ON "drgcodes"("row_id");
+CREATE UNIQUE INDEX "drgcodes_id_key" ON "drgcodes"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "icustays_row_id_key" ON "icustays"("row_id");
+CREATE UNIQUE INDEX "icustays_id_key" ON "icustays"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "inputevents_cv_row_id_key" ON "inputevents_cv"("row_id");
+CREATE UNIQUE INDEX "inputevents_cv_id_key" ON "inputevents_cv"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "inputevents_mv_row_id_key" ON "inputevents_mv"("row_id");
+CREATE UNIQUE INDEX "inputevents_mv_id_key" ON "inputevents_mv"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "labevents_row_id_key" ON "labevents"("row_id");
+CREATE UNIQUE INDEX "labevents_id_key" ON "labevents"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "microbiologyevents_row_id_key" ON "microbiologyevents"("row_id");
+CREATE UNIQUE INDEX "microbiologyevents_id_key" ON "microbiologyevents"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "noteevents_row_id_key" ON "noteevents"("row_id");
+CREATE UNIQUE INDEX "noteevents_id_key" ON "noteevents"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "outputevents_row_id_key" ON "outputevents"("row_id");
+CREATE UNIQUE INDEX "outputevents_id_key" ON "outputevents"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "patients_row_id_key" ON "patients"("row_id");
+CREATE UNIQUE INDEX "patients_id_key" ON "patients"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "prescriptions_row_id_key" ON "prescriptions"("row_id");
+CREATE UNIQUE INDEX "prescriptions_id_key" ON "prescriptions"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "procedureevents_mv_row_id_key" ON "procedureevents_mv"("row_id");
+CREATE UNIQUE INDEX "procedureevents_mv_id_key" ON "procedureevents_mv"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "procedures_icd_row_id_key" ON "procedures_icd"("row_id");
+CREATE UNIQUE INDEX "procedures_icd_id_key" ON "procedures_icd"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "services_row_id_key" ON "services"("row_id");
+CREATE UNIQUE INDEX "services_id_key" ON "services"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "transfers_row_id_key" ON "transfers"("row_id");
+CREATE UNIQUE INDEX "transfers_id_key" ON "transfers"("id");

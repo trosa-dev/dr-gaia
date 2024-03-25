@@ -18,7 +18,8 @@ model loader {
 }
 
 model admissions {
-  row_id               Int    @id @unique
+  id                   Int    @id @unique @default(autoincrement())
+  row_id               String
   subject_id           String
   hadm_id              String
   admittime            String
@@ -40,7 +41,8 @@ model admissions {
 }
 
 model callout {
-  row_id                 Int    @id @unique
+  id                     Int    @id @unique @default(autoincrement())
+  row_id                 String
   subject_id             String
   hadm_id                String
   submit_wardid          String
@@ -67,14 +69,16 @@ model callout {
 }
 
 model caregivers {
-  row_id      Int    @id @unique
+  id          Int    @id @unique @default(autoincrement())
+  row_id      String
   cgid        String
   label       String
   description String
 }
 
 model chartevents {
-  row_id       Int    @id @unique
+  id           Int    @id @unique @default(autoincrement())
+  row_id       String
   subject_id   String
   hadm_id      String
   icustay_id   String
@@ -92,7 +96,8 @@ model chartevents {
 }
 
 model cptevents {
-  row_id           Int    @id @unique
+  id               Int    @id @unique @default(autoincrement())
+  row_id           String
   subject_id       String
   hadm_id          String
   costcenter       String
@@ -107,7 +112,8 @@ model cptevents {
 }
 
 model d_cpt {
-  row_id              Int    @id @unique
+  id                  Int    @id @unique @default(autoincrement())
+  row_id              String
   category            String
   sectionrange        String
   sectionheader       String
@@ -119,21 +125,24 @@ model d_cpt {
 }
 
 model d_icd_diagnoses {
-  row_id      Int    @id @unique
+  id          Int    @id @unique @default(autoincrement())
+  row_id      String
   icd9_code   String
   short_title String
   long_title  String
 }
 
 model d_icd_procedures {
-  row_id      Int    @id @unique
+  id          Int    @id @unique @default(autoincrement())
+  row_id      String
   icd9_code   String
   short_title String
   long_title  String
 }
 
 model d_items {
-  row_id       Int    @id @unique
+  id           Int    @id @unique @default(autoincrement())
+  row_id       String
   itemid       String
   label        String
   abbreviation String
@@ -146,7 +155,8 @@ model d_items {
 }
 
 model d_labitems {
-  row_id     Int    @id @unique
+  id         Int    @id @unique @default(autoincrement())
+  row_id     String
   itemid     String
   label      String
   fluid      String
@@ -155,7 +165,8 @@ model d_labitems {
 }
 
 model datetimeevents {
-  row_id       Int    @id @unique
+  id           Int    @id @unique @default(autoincrement())
+  row_id       String
   subject_id   String
   hadm_id      String
   icustay_id   String
@@ -172,7 +183,8 @@ model datetimeevents {
 }
 
 model diagnoses_icd {
-  row_id     Int    @id @unique
+  id         Int    @id @unique @default(autoincrement())
+  row_id     String
   subject_id String
   hadm_id    String
   seq_num    String
@@ -180,7 +192,8 @@ model diagnoses_icd {
 }
 
 model drgcodes {
-  row_id        Int    @id @unique
+  id            Int    @id @unique @default(autoincrement())
+  row_id        String
   subject_id    String
   hadm_id       String
   drg_type      String
@@ -191,7 +204,8 @@ model drgcodes {
 }
 
 model icustays {
-  row_id         Int    @id @unique
+  id             Int    @id @unique @default(autoincrement())
+  row_id         String
   subject_id     String
   hadm_id        String
   icustay_id     String
@@ -206,7 +220,8 @@ model icustays {
 }
 
 model inputevents_cv {
-  row_id            Int    @id @unique
+  id                Int    @id @unique @default(autoincrement())
+  row_id            String
   subject_id        String
   hadm_id           String
   icustay_id        String
@@ -231,7 +246,8 @@ model inputevents_cv {
 }
 
 model inputevents_mv {
-  row_id                        Int    @id @unique
+  id                            Int    @id @unique @default(autoincrement())
+  row_id                        String
   subject_id                    String
   hadm_id                       String
   icustay_id                    String
@@ -265,7 +281,8 @@ model inputevents_mv {
 }
 
 model labevents {
-  row_id     Int    @id @unique
+  id         Int    @id @unique @default(autoincrement())
+  row_id     String
   subject_id String
   hadm_id    String
   itemid     String
@@ -277,7 +294,8 @@ model labevents {
 }
 
 model microbiologyevents {
-  row_id              Int    @id @unique
+  id                  Int    @id @unique @default(autoincrement())
+  row_id              String
   subject_id          String
   hadm_id             String
   chartdate           String
@@ -296,7 +314,8 @@ model microbiologyevents {
 }
 
 model noteevents {
-  row_id      Int    @id @unique
+  id          Int    @id @unique @default(autoincrement())
+  row_id      String
   subject_id  String
   hadm_id     String
   chartdate   String
@@ -310,7 +329,8 @@ model noteevents {
 }
 
 model outputevents {
-  row_id     Int    @id @unique
+  id         Int    @id @unique @default(autoincrement())
+  row_id     String
   subject_id String
   hadm_id    String
   icustay_id String
@@ -326,7 +346,8 @@ model outputevents {
 }
 
 model patients {
-  row_id      Int    @id @unique
+  id          Int    @id @unique @default(autoincrement())
+  row_id      String
   subject_id  String
   gender      String
   dob         String
@@ -337,7 +358,8 @@ model patients {
 }
 
 model prescriptions {
-  row_id            Int    @id @unique
+  id                Int    @id @unique @default(autoincrement())
+  row_id            String
   subject_id        String
   hadm_id           String
   icustay_id        String
@@ -359,7 +381,8 @@ model prescriptions {
 }
 
 model procedureevents_mv {
-  row_id                     Int    @id @unique
+  id                         Int    @id @unique @default(autoincrement())
+  row_id                     String
   subject_id                 String
   hadm_id                    String
   icustay_id                 String
@@ -387,7 +410,8 @@ model procedureevents_mv {
 }
 
 model procedures_icd {
-  row_id     Int    @id @unique
+  id         Int    @id @unique @default(autoincrement())
+  row_id     String
   subject_id String
   hadm_id    String
   seq_num    String
@@ -395,7 +419,8 @@ model procedures_icd {
 }
 
 model services {
-  row_id       Int    @id @unique
+  id           Int    @id @unique @default(autoincrement())
+  row_id       String
   subject_id   String
   hadm_id      String
   transfertime String
@@ -404,7 +429,8 @@ model services {
 }
 
 model transfers {
-  row_id        Int    @id @unique
+  id            Int    @id @unique @default(autoincrement())
+  row_id        String
   subject_id    String
   hadm_id       String
   icustay_id    String
