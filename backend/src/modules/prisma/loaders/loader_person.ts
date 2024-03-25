@@ -5,15 +5,27 @@ import { PrismaService } from '../prisma.service';
 import { Logger } from '@nestjs/common';
 
 interface CsvData {
-  care_site_id: string;
-  care_site_name: string;
-  place_of_service_concept_id: string;
+  person_id: string;
+  gender_concept_id: string;
+  year_of_birth: string;
+  month_of_birth: string;
+  day_of_birth: string;
+  birth_datetime: string;
+  race_concept_id: string;
+  ethnicity_concept_id: string;
   location_id: string;
-  care_site_source_value: string;
-  place_of_service_source_value: string;
+  provider_id: string;
+  care_site_id: string;
+  person_source_value: string;
+  gender_source_value: string;
+  gender_source_concept_id: string;
+  race_source_value: string;
+  race_source_concept_id: string;
+  ethnicity_source_value: string;
+  ethnicity_source_concept_id: string;
 }
 
-export async function loader_care_site(param: {
+export async function loader_person(param: {
   prismaService: PrismaService;
   logger: Logger;
   loadedDbs: any[];
@@ -21,7 +33,7 @@ export async function loader_care_site(param: {
   const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = 'care_site.csv';
+  const csvId = 'person.csv';
 
   const filePath = path.resolve(
     __dirname,
@@ -38,15 +50,26 @@ export async function loader_care_site(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
-            await prismaService.care_site.create({
+            await prismaService.person.create({
               data: {
+                birth_datetime: data.birth_datetime,
                 care_site_id: data.care_site_id,
-                care_site_name: data.care_site_name,
-                care_site_source_value: data.care_site_source_value,
+                day_of_birth: data.day_of_birth,
+                ethnicity_concept_id: data.ethnicity_concept_id,
+                ethnicity_source_concept_id: data.ethnicity_source_concept_id,
+                ethnicity_source_value: data.ethnicity_source_value,
+                gender_concept_id: data.gender_concept_id,
+                gender_source_concept_id: data.gender_source_concept_id,
+                gender_source_value: data.gender_source_value,
                 location_id: data.location_id,
-                place_of_service_concept_id: data.place_of_service_concept_id,
-                place_of_service_source_value:
-                  data.place_of_service_source_value,
+                month_of_birth: data.month_of_birth,
+                person_id: data.person_id,
+                person_source_value: data.person_source_value,
+                provider_id: data.provider_id,
+                race_concept_id: data.race_concept_id,
+                race_source_concept_id: data.race_source_concept_id,
+                race_source_value: data.race_source_value,
+                year_of_birth: data.year_of_birth,
               },
             });
           } catch (error) {

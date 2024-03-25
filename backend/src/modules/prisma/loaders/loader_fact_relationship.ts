@@ -5,15 +5,14 @@ import { PrismaService } from '../prisma.service';
 import { Logger } from '@nestjs/common';
 
 interface CsvData {
-  concept_id_1: string;
-  concept_id_2: string;
-  relationship_id: string;
-  valid_start_DATE: string;
-  valid_end_DATE: string;
-  invalid_reason: string;
+  relationship_concept_id: string;
+  fact_id_1: string;
+  fact_id_2: string;
+  domain_concept_id_1: string;
+  domain_concept_id_2: string;
 }
 
-export async function loader_2b_concept_relationship(param: {
+export async function loader_fact_relationship(param: {
   prismaService: PrismaService;
   logger: Logger;
   loadedDbs: any[];
@@ -21,7 +20,7 @@ export async function loader_2b_concept_relationship(param: {
   const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = '2b_concept_relationship.csv';
+  const csvId = 'fact_relationship.csv';
 
   const filePath = path.resolve(
     __dirname,
@@ -38,14 +37,13 @@ export async function loader_2b_concept_relationship(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
-            await prismaService.concept_relationship_2b.create({
+            await prismaService.fact_relationship.create({
               data: {
-                concept_id_1: data.concept_id_1,
-                concept_id_2: data.concept_id_2,
-                invalid_reason: data.invalid_reason,
-                relationship_id: data.relationship_id,
-                valid_end_date: data.valid_end_DATE,
-                valid_start_date: data.valid_start_DATE,
+                domain_concept_id_1: data.domain_concept_id_1,
+                domain_concept_id_2: data.domain_concept_id_2,
+                fact_id_1: data.fact_id_1,
+                fact_id_2: data.fact_id_2,
+                relationship_concept_id: data.relationship_concept_id,
               },
             });
           } catch (error) {
@@ -74,4 +72,6 @@ export async function loader_2b_concept_relationship(param: {
         });
     });
   }
+
+  return true;
 }

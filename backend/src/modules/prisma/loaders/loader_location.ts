@@ -5,15 +5,17 @@ import { PrismaService } from '../prisma.service';
 import { Logger } from '@nestjs/common';
 
 interface CsvData {
-  concept_id_1: string;
-  concept_id_2: string;
-  relationship_id: string;
-  valid_start_DATE: string;
-  valid_end_DATE: string;
-  invalid_reason: string;
+  location_id: string;
+  address_1: string;
+  address_2: string;
+  city: string;
+  state: string;
+  zip: string;
+  county: string;
+  location_source_value: string;
 }
 
-export async function loader_2b_concept_relationship(param: {
+export async function loader_location(param: {
   prismaService: PrismaService;
   logger: Logger;
   loadedDbs: any[];
@@ -21,7 +23,7 @@ export async function loader_2b_concept_relationship(param: {
   const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = '2b_concept_relationship.csv';
+  const csvId = 'location.csv';
 
   const filePath = path.resolve(
     __dirname,
@@ -38,14 +40,16 @@ export async function loader_2b_concept_relationship(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
-            await prismaService.concept_relationship_2b.create({
+            await prismaService.location.create({
               data: {
-                concept_id_1: data.concept_id_1,
-                concept_id_2: data.concept_id_2,
-                invalid_reason: data.invalid_reason,
-                relationship_id: data.relationship_id,
-                valid_end_date: data.valid_end_DATE,
-                valid_start_date: data.valid_start_DATE,
+                address_1: data.address_1,
+                address_2: data.address_2,
+                city: data.city,
+                county: data.county,
+                location_id: data.location_id,
+                location_source_value: data.location_source_value,
+                state: data.state,
+                zip: data.zip,
               },
             });
           } catch (error) {
@@ -74,4 +78,6 @@ export async function loader_2b_concept_relationship(param: {
         });
     });
   }
+
+  return true;
 }

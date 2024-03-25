@@ -5,15 +5,14 @@ import { PrismaService } from '../prisma.service';
 import { Logger } from '@nestjs/common';
 
 interface CsvData {
-  concept_id_1: string;
-  concept_id_2: string;
-  relationship_id: string;
-  valid_start_DATE: string;
-  valid_end_DATE: string;
-  invalid_reason: string;
+  observation_period_id: string;
+  person_id: string;
+  observation_period_start_date: string;
+  observation_period_end_date: string;
+  period_type_concept_id: string;
 }
 
-export async function loader_2b_concept_relationship(param: {
+export async function loader_observation_period(param: {
   prismaService: PrismaService;
   logger: Logger;
   loadedDbs: any[];
@@ -21,7 +20,7 @@ export async function loader_2b_concept_relationship(param: {
   const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = '2b_concept_relationship.csv';
+  const csvId = 'observation_period.csv';
 
   const filePath = path.resolve(
     __dirname,
@@ -38,14 +37,14 @@ export async function loader_2b_concept_relationship(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
-            await prismaService.concept_relationship_2b.create({
+            await prismaService.observation_period.create({
               data: {
-                concept_id_1: data.concept_id_1,
-                concept_id_2: data.concept_id_2,
-                invalid_reason: data.invalid_reason,
-                relationship_id: data.relationship_id,
-                valid_end_date: data.valid_end_DATE,
-                valid_start_date: data.valid_start_DATE,
+                observation_period_end_date: data.observation_period_end_date,
+                observation_period_id: data.observation_period_id,
+                observation_period_start_date:
+                  data.observation_period_start_date,
+                period_type_concept_id: data.period_type_concept_id,
+                person_id: data.person_id,
               },
             });
           } catch (error) {
@@ -74,4 +73,6 @@ export async function loader_2b_concept_relationship(param: {
         });
     });
   }
+
+  return true;
 }

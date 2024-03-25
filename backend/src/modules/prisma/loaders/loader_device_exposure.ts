@@ -5,15 +5,24 @@ import { PrismaService } from '../prisma.service';
 import { Logger } from '@nestjs/common';
 
 interface CsvData {
-  condition_era_id: string;
+  device_exposure_id: string;
   person_id: string;
-  condition_concept_id: string;
-  condition_era_start_date: string;
-  condition_era_end_date: string;
-  condition_occurrence_count: string;
+  device_concept_id: string;
+  device_exposure_start_date: string;
+  device_exposure_start_datetime: string;
+  device_exposure_end_date: string;
+  device_exposure_end_datetime: string;
+  device_type_concept_id: string;
+  unique_device_id: string;
+  quantity: string;
+  provider_id: string;
+  visit_occurrence_id: string;
+  visit_detail_id: string;
+  device_source_value: string;
+  device_source_concept_id: string;
 }
 
-export async function loader_condition_era(param: {
+export async function loader_device_exposure(param: {
   prismaService: PrismaService;
   logger: Logger;
   loadedDbs: any[];
@@ -21,7 +30,7 @@ export async function loader_condition_era(param: {
   const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = 'condition_era.csv';
+  const csvId = 'device_exposure.csv';
 
   const filePath = path.resolve(
     __dirname,
@@ -38,14 +47,24 @@ export async function loader_condition_era(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
-            await prismaService.condition_era.create({
+            await prismaService.device_exposure.create({
               data: {
-                condition_concept_id: data.condition_concept_id,
-                condition_era_end_date: data.condition_era_end_date,
-                condition_era_id: data.condition_era_id,
-                condition_era_start_date: data.condition_era_start_date,
-                condition_occurrence_count: data.condition_occurrence_count,
+                device_concept_id: data.device_concept_id,
+                device_exposure_end_date: data.device_exposure_end_date,
+                device_exposure_end_datetime: data.device_exposure_end_datetime,
+                device_exposure_id: data.device_exposure_id,
+                device_exposure_start_date: data.device_exposure_start_date,
+                device_exposure_start_datetime:
+                  data.device_exposure_start_datetime,
+                device_source_concept_id: data.device_source_concept_id,
+                device_source_value: data.device_source_value,
+                device_type_concept_id: data.device_type_concept_id,
                 person_id: data.person_id,
+                provider_id: data.provider_id,
+                quantity: data.quantity,
+                unique_device_id: data.unique_device_id,
+                visit_detail_id: data.visit_detail_id,
+                visit_occurrence_id: data.visit_occurrence_id,
               },
             });
           } catch (error) {

@@ -5,25 +5,29 @@ import { PrismaService } from '../prisma.service';
 import { Logger } from '@nestjs/common';
 
 interface CsvData {
-  condition_occurrence_id: string;
+  measurement_id: string;
   person_id: string;
-  condition_concept_id: string;
-  condition_start_date: string;
-  condition_start_datetime: string;
-  condition_end_date: string;
-  condition_end_datetime: string;
-  condition_type_concept_id: string;
-  stop_reason: string;
+  measurement_concept_id: string;
+  measurement_date: string;
+  measurement_datetime: string;
+  measurement_time: string;
+  measurement_type_concept_id: string;
+  operator_concept_id: string;
+  value_as_number: string;
+  value_as_concept_id: string;
+  unit_concept_id: string;
+  range_low: string;
+  range_high: string;
   provider_id: string;
   visit_occurrence_id: string;
   visit_detail_id: string;
-  condition_source_value: string;
-  condition_source_concept_id: string;
-  condition_status_source_value: string;
-  condition_status_concept_id: string;
+  measurement_source_value: string;
+  measurement_source_concept_id: string;
+  unit_source_value: string;
+  value_source_value: string;
 }
 
-export async function loader_condition_occurrence(param: {
+export async function loader_measurement(param: {
   prismaService: PrismaService;
   logger: Logger;
   loadedDbs: any[];
@@ -31,7 +35,7 @@ export async function loader_condition_occurrence(param: {
   const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = 'condition_occurrence.csv';
+  const csvId = 'measurement.csv';
 
   const filePath = path.resolve(
     __dirname,
@@ -48,23 +52,27 @@ export async function loader_condition_occurrence(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
-            await prismaService.condition_occurrence.create({
+            await prismaService.measurement.create({
               data: {
-                condition_concept_id: data.condition_concept_id,
-                condition_end_date: data.condition_end_date,
-                condition_end_datetime: data.condition_end_datetime,
-                condition_occurrence_id: data.condition_occurrence_id,
-                condition_source_concept_id: data.condition_source_concept_id,
-                condition_source_value: data.condition_source_value,
-                condition_start_date: data.condition_start_date,
-                condition_start_datetime: data.condition_start_datetime,
-                condition_status_concept_id: data.condition_status_concept_id,
-                condition_status_source_value:
-                  data.condition_status_source_value,
-                condition_type_concept_id: data.condition_type_concept_id,
+                measurement_concept_id: data.measurement_concept_id,
+                measurement_date: data.measurement_date,
+                measurement_datetime: data.measurement_datetime,
+                measurement_id: data.measurement_id,
                 person_id: data.person_id,
+                measurement_source_concept_id:
+                  data.measurement_source_concept_id,
+                measurement_source_value: data.measurement_source_value,
+                measurement_time: data.measurement_time,
+                measurement_type_concept_id: data.measurement_type_concept_id,
+                operator_concept_id: data.operator_concept_id,
                 provider_id: data.provider_id,
-                stop_reason: data.stop_reason,
+                range_high: data.range_high,
+                range_low: data.range_low,
+                unit_concept_id: data.unit_concept_id,
+                unit_source_value: data.unit_source_value,
+                value_as_concept_id: data.value_as_concept_id,
+                value_as_number: data.value_as_number,
+                value_source_value: data.value_source_value,
                 visit_detail_id: data.visit_detail_id,
                 visit_occurrence_id: data.visit_occurrence_id,
               },

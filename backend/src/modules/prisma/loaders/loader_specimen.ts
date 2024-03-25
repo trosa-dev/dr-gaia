@@ -5,15 +5,24 @@ import { PrismaService } from '../prisma.service';
 import { Logger } from '@nestjs/common';
 
 interface CsvData {
-  condition_era_id: string;
+  specimen_id: string;
   person_id: string;
-  condition_concept_id: string;
-  condition_era_start_date: string;
-  condition_era_end_date: string;
-  condition_occurrence_count: string;
+  specimen_concept_id: string;
+  specimen_type_concept_id: string;
+  specimen_date: string;
+  specimen_datetime: string;
+  quantity: string;
+  unit_concept_id: string;
+  anatomic_site_concept_id: string;
+  disease_status_concept_id: string;
+  specimen_source_id: string;
+  specimen_source_value: string;
+  unit_source_value: string;
+  anatomic_site_source_value: string;
+  disease_status_source_value: string;
 }
 
-export async function loader_condition_era(param: {
+export async function loader_specimen(param: {
   prismaService: PrismaService;
   logger: Logger;
   loadedDbs: any[];
@@ -21,7 +30,7 @@ export async function loader_condition_era(param: {
   const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = 'condition_era.csv';
+  const csvId = 'specimen.csv';
 
   const filePath = path.resolve(
     __dirname,
@@ -38,14 +47,23 @@ export async function loader_condition_era(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
-            await prismaService.condition_era.create({
+            await prismaService.specimen.create({
               data: {
-                condition_concept_id: data.condition_concept_id,
-                condition_era_end_date: data.condition_era_end_date,
-                condition_era_id: data.condition_era_id,
-                condition_era_start_date: data.condition_era_start_date,
-                condition_occurrence_count: data.condition_occurrence_count,
+                anatomic_site_concept_id: data.anatomic_site_concept_id,
+                anatomic_site_source_value: data.anatomic_site_source_value,
+                disease_status_concept_id: data.disease_status_concept_id,
+                disease_status_source_value: data.disease_status_source_value,
                 person_id: data.person_id,
+                quantity: data.quantity,
+                specimen_concept_id: data.specimen_concept_id,
+                specimen_date: data.specimen_date,
+                specimen_datetime: data.specimen_datetime,
+                specimen_id: data.specimen_id,
+                specimen_source_id: data.specimen_source_id,
+                specimen_source_value: data.specimen_source_value,
+                specimen_type_concept_id: data.specimen_type_concept_id,
+                unit_concept_id: data.unit_concept_id,
+                unit_source_value: data.unit_source_value,
               },
             });
           } catch (error) {

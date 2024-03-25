@@ -5,25 +5,32 @@ import { PrismaService } from '../prisma.service';
 import { Logger } from '@nestjs/common';
 
 interface CsvData {
-  condition_occurrence_id: string;
+  drug_exposure_id: string;
   person_id: string;
-  condition_concept_id: string;
-  condition_start_date: string;
-  condition_start_datetime: string;
-  condition_end_date: string;
-  condition_end_datetime: string;
-  condition_type_concept_id: string;
+  drug_concept_id: string;
+  drug_exposure_start_date: string;
+  drug_exposure_start_datetime: string;
+  drug_exposure_end_date: string;
+  drug_exposure_end_datetime: string;
+  verbatim_end_date: string;
+  drug_type_concept_id: string;
   stop_reason: string;
+  refills: string;
+  quantity: string;
+  days_supply: string;
+  sig: string;
+  route_concept_id: string;
+  lot_number: string;
   provider_id: string;
   visit_occurrence_id: string;
   visit_detail_id: string;
-  condition_source_value: string;
-  condition_source_concept_id: string;
-  condition_status_source_value: string;
-  condition_status_concept_id: string;
+  drug_source_value: string;
+  drug_source_concept_id: string;
+  route_source_value: string;
+  dose_unit_source_value: string;
 }
 
-export async function loader_condition_occurrence(param: {
+export async function loader_drug_exposure(param: {
   prismaService: PrismaService;
   logger: Logger;
   loadedDbs: any[];
@@ -31,7 +38,7 @@ export async function loader_condition_occurrence(param: {
   const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = 'condition_occurrence.csv';
+  const csvId = 'drug_exposure.csv';
 
   const filePath = path.resolve(
     __dirname,
@@ -48,25 +55,31 @@ export async function loader_condition_occurrence(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
-            await prismaService.condition_occurrence.create({
+            await prismaService.drug_exposure.create({
               data: {
-                condition_concept_id: data.condition_concept_id,
-                condition_end_date: data.condition_end_date,
-                condition_end_datetime: data.condition_end_datetime,
-                condition_occurrence_id: data.condition_occurrence_id,
-                condition_source_concept_id: data.condition_source_concept_id,
-                condition_source_value: data.condition_source_value,
-                condition_start_date: data.condition_start_date,
-                condition_start_datetime: data.condition_start_datetime,
-                condition_status_concept_id: data.condition_status_concept_id,
-                condition_status_source_value:
-                  data.condition_status_source_value,
-                condition_type_concept_id: data.condition_type_concept_id,
+                days_supply: data.days_supply,
+                dose_unit_source_value: data.dose_unit_source_value,
+                drug_concept_id: data.drug_concept_id,
+                drug_exposure_end_date: data.drug_exposure_end_date,
+                drug_exposure_end_datetime: data.drug_exposure_end_datetime,
+                drug_exposure_id: data.drug_exposure_id,
+                drug_exposure_start_date: data.drug_exposure_start_date,
+                drug_exposure_start_datetime: data.drug_exposure_start_datetime,
+                drug_source_concept_id: data.drug_source_concept_id,
+                drug_source_value: data.drug_source_value,
+                drug_type_concept_id: data.drug_type_concept_id,
+                lot_number: data.lot_number,
                 person_id: data.person_id,
                 provider_id: data.provider_id,
+                quantity: data.quantity,
+                refills: data.refills,
+                route_concept_id: data.route_concept_id,
+                route_source_value: data.route_source_value,
+                sig: data.sig,
                 stop_reason: data.stop_reason,
+                verbatim_end_date: data.verbatim_end_date,
                 visit_detail_id: data.visit_detail_id,
-                visit_occurrence_id: data.visit_occurrence_id,
+                visit_occurrence_id: data.visit_detail_id,
               },
             });
           } catch (error) {

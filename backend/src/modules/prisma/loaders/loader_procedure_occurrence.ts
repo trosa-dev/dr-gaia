@@ -5,15 +5,23 @@ import { PrismaService } from '../prisma.service';
 import { Logger } from '@nestjs/common';
 
 interface CsvData {
-  concept_id_1: string;
-  concept_id_2: string;
-  relationship_id: string;
-  valid_start_DATE: string;
-  valid_end_DATE: string;
-  invalid_reason: string;
+  procedure_occurrence_id: string;
+  person_id: string;
+  procedure_concept_id: string;
+  procedure_date: string;
+  procedure_datetime: string;
+  procedure_type_concept_id: string;
+  modifier_concept_id: string;
+  quantity: string;
+  provider_id: string;
+  visit_occurrence_id: string;
+  visit_detail_id: string;
+  procedure_source_value: string;
+  procedure_source_concept_id: string;
+  modifier_source_value: string;
 }
 
-export async function loader_2b_concept_relationship(param: {
+export async function loader_procedure_occurrence(param: {
   prismaService: PrismaService;
   logger: Logger;
   loadedDbs: any[];
@@ -21,7 +29,7 @@ export async function loader_2b_concept_relationship(param: {
   const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = '2b_concept_relationship.csv';
+  const csvId = 'procedure_occurrence.csv';
 
   const filePath = path.resolve(
     __dirname,
@@ -38,14 +46,22 @@ export async function loader_2b_concept_relationship(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
-            await prismaService.concept_relationship_2b.create({
+            await prismaService.procedure_occurrence.create({
               data: {
-                concept_id_1: data.concept_id_1,
-                concept_id_2: data.concept_id_2,
-                invalid_reason: data.invalid_reason,
-                relationship_id: data.relationship_id,
-                valid_end_date: data.valid_end_DATE,
-                valid_start_date: data.valid_start_DATE,
+                modifier_concept_id: data.modifier_concept_id,
+                modifier_source_value: data.modifier_source_value,
+                person_id: data.person_id,
+                procedure_concept_id: data.procedure_concept_id,
+                procedure_date: data.procedure_date,
+                procedure_datetime: data.procedure_datetime,
+                procedure_occurrence_id: data.procedure_occurrence_id,
+                procedure_source_concept_id: data.procedure_source_concept_id,
+                procedure_source_value: data.procedure_source_value,
+                procedure_type_concept_id: data.procedure_type_concept_id,
+                provider_id: data.provider_id,
+                quantity: data.quantity,
+                visit_detail_id: data.visit_detail_id,
+                visit_occurrence_id: data.visit_occurrence_id,
               },
             });
           } catch (error) {
@@ -74,4 +90,6 @@ export async function loader_2b_concept_relationship(param: {
         });
     });
   }
+
+  return true;
 }
