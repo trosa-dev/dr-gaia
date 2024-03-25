@@ -30,7 +30,7 @@ services:
       context: ./backend # Specify the build context for the backend Dockerfile
       dockerfile: Dockerfile # Specify the Dockerfile for building the backend
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@pg_database:5432"
+      DATABASE_URL: "postgresql://postgres:postgres@pg_database:5432/?pool_timeout=0"
     ports:
       - "3001:3001"
     depends_on:
