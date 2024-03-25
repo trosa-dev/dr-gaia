@@ -2,6 +2,7 @@ import * as csv from 'csv-parser';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { PrismaService } from '../prisma.service';
+import { Logger } from '@nestjs/common';
 
 interface CsvData {
   person_id: string;
@@ -13,8 +14,12 @@ interface CsvData {
   cause_source_concept_id: string;
 }
 
-export async function loader_death(param: { prismaService: PrismaService }) {
-  const { prismaService } = param;
+export async function loader_death(param: {
+  prismaService: PrismaService;
+  logger: Logger;
+  loadedDbs: any[];
+}) {
+  const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
   const csvId = 'death.csv';
@@ -46,15 +51,24 @@ export async function loader_death(param: { prismaService: PrismaService }) {
               },
             });
           } catch (error) {
-            console.log(error);
+            logger.error(error);
           }
         })
         .on('end', async () => {
           try {
             await prismaService.loader.create({ data: { id: csvId } });
-            console.log(`Done loading: ${csvId}`);
+
+            loadedDbs.push(csvId);
+
+            logger.warn(
+              `${loadedDbs.length.toString().padStart(2, '0')}/22: database loaded - ${csvId}`,
+            );
+
+            if (loadedDbs.length === 22) {
+              logger.log('System is ready for use');
+            }
           } catch (error) {
-            console.log(error);
+            logger.error(error);
           }
         })
         .on('error', (error) => {

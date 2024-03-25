@@ -29,51 +29,136 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     super();
   }
 
-  private readonly logger = new Logger('DrGaia: ');
+  private readonly logger = new Logger('DrGaia');
 
   async onModuleInit() {
     try {
       await this.$connect();
+
       this.logger.log('Connected to database successfully.');
-
-      // Adding a delay of 10 seconds
-      this.logger.log('Loading database tables. This may take a while...');
-      await this.delay(10000);
-
+      this.logger.warn('Loading database tables. This may take a while...');
       this.logger.log('Starting data loading process.');
 
-      loader_2b_concept_relationship({ prismaService: this });
-      loader_2b_concept({ prismaService: this });
-      loader_2b_vocabulary({ prismaService: this });
+      const loadedDbs = [];
+
+      loader_2b_concept_relationship({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_2b_concept({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_2b_vocabulary({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
       //loader not needed for attribute_definition.csv - no data
-      loader_care_site({ prismaService: this });
-      loader_cdm_source({ prismaService: this });
+      loader_care_site({ prismaService: this, logger: this.logger, loadedDbs });
+      loader_cdm_source({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
       //loader not needed for cohort_attribute.csv - no data
       //loader not needed for cohort_definition.csv - no data
       //loader not needed for cohort.csv - no data
-      loader_condition_era({ prismaService: this });
-      loader_condition_occurrence({ prismaService: this });
+      loader_condition_era({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_condition_occurrence({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
       //loader not needed for cost.csv - no data
-      loader_death({ prismaService: this });
-      loader_device_exposure({ prismaService: this });
-      loader_dose_era({ prismaService: this });
-      loader_drug_era({ prismaService: this });
-      loader_drug_exposure({ prismaService: this });
-      loader_fact_relationship({ prismaService: this });
-      loader_location({ prismaService: this });
-      loader_measurement({ prismaService: this });
+      loader_death({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_device_exposure({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_dose_era({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_drug_era({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_drug_exposure({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_fact_relationship({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_location({ prismaService: this, logger: this.logger, loadedDbs });
+      loader_measurement({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
       //loader not needed for metadata.csv - no data
       //loader not needed for note_nlp.csv - no data
       //loader not needed for note.csv - no data
-      loader_observation_period({ prismaService: this });
-      loader_observation({ prismaService: this });
+      loader_observation_period({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_observation({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
       //loader not needed for payer_plan_period.csv - no data
-      loader_person({ prismaService: this });
-      loader_procedure_occurrence({ prismaService: this });
+      loader_person({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_procedure_occurrence({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
       //loader not needed for provider.csv - no data
-      loader_specimen({ prismaService: this });
-      loader_visit_detail({ prismaService: this });
-      loader_visit_occurrence({ prismaService: this });
+      loader_specimen({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_visit_detail({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_visit_occurrence({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+
+      if (loadedDbs.length === 22) {
+        this.logger.log('All databases loaded');
+        this.logger.log('System is ready for use');
+        return true;
+      }
     } catch (error) {
       console.log(error);
     }
