@@ -55,7 +55,7 @@ export async function loader_caregivers(param: {
             loadedDbs.push(csvId);
 
             logger.warn(
-              `${loadedDbs.length.toString().padStart(2, '0')}/22: database loaded - ${csvId}`,
+              `${loadedDbs.length.toString().padStart(2, '0')}/26: database loaded - ${csvId}`,
             );
 
             if (loadedDbs.length === 22) {

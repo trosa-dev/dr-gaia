@@ -11,7 +11,7 @@ interface CsvData {
   long_title: string;
 }
 
-export async function loader_d_icd_diagnoses(param: {
+export async function loader_d_icd_procedures(param: {
   prismaService: PrismaService;
   logger: Logger;
   loadedDbs: any[];
@@ -19,7 +19,7 @@ export async function loader_d_icd_diagnoses(param: {
   const { prismaService, logger, loadedDbs } = param;
 
   let csvIsLoaded: null | { id: string } = null;
-  const csvId = 'd_icd_diagnoses.csv';
+  const csvId = 'd_icd_procedures.csv';
 
   const filePath = path.resolve(
     __dirname,
@@ -36,7 +36,7 @@ export async function loader_d_icd_diagnoses(param: {
         .pipe(csv())
         .on('data', async (data: CsvData) => {
           try {
-            await prismaService.d_icd_diagnoses.create({
+            await prismaService.d_icd_procedures.create({
               data: {
                 row_id: data.row_id,
                 icd9_code: data.icd9_code,
