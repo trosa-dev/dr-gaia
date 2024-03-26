@@ -4,6 +4,7 @@ import { loader_admissions } from './loaders/loader_admissions';
 import { loader_callout } from './loaders/loader_callout';
 import { loader_caregivers } from './loaders/loader_caregivers';
 import { loader_chartevents } from './loaders/loader_chartevents';
+import { loader_cptevents } from './loaders/loader_cptevents';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -39,6 +40,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         loadedDbs,
       });
       loader_chartevents({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_cptevents({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
