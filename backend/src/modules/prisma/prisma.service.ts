@@ -1,6 +1,7 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { loader_admissions } from './loaders/loader_admissions';
+import { loader_callout } from './loaders/loader_callout';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -21,6 +22,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       const loadedDbs = [];
 
       loader_admissions({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_callout({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
