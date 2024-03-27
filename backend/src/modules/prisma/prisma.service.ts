@@ -16,6 +16,7 @@ import { loader_drgcodes } from './loaders/loader_drgcodes';
 import { loader_icustays } from './loaders/loader_icustays';
 import { loader_inputevents_cv } from './loaders/loader_inputevents_cv';
 import { loader_inputevents_mv } from './loaders/loader_inputevents_mv';
+import { loader_labevents } from './loaders/loader_labevents';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -111,6 +112,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         loadedDbs,
       });
       loader_inputevents_mv({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_labevents({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
