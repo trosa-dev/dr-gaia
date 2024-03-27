@@ -12,6 +12,7 @@ import { loader_d_items } from './loaders/loader_d_items';
 import { loader_d_labitems } from './loaders/loader_d_labitems';
 import { loader_datetimeevents } from './loaders/loader_datetimeevents';
 import { loader_diagnoses_icd } from './loaders/loader_diagnoses_icd';
+import { loader_drgcodes } from './loaders/loader_drgcodes';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -87,6 +88,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         loadedDbs,
       });
       loader_diagnoses_icd({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_drgcodes({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
