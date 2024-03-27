@@ -18,6 +18,7 @@ import { loader_inputevents_cv } from './loaders/loader_inputevents_cv';
 import { loader_inputevents_mv } from './loaders/loader_inputevents_mv';
 import { loader_labevents } from './loaders/loader_labevents';
 import { loader_microbiologyevents } from './loaders/loader_microbiologyevents';
+import { loader_noteevents } from './loaders/loader_noteevents';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -123,6 +124,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         loadedDbs,
       });
       loader_microbiologyevents({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_noteevents({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
