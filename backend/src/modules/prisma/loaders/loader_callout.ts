@@ -97,10 +97,6 @@ export async function loader_callout(param: {
             logger.warn(
               `${loadedDbs.length.toString().padStart(2, '0')}/26: database loaded - ${csvId}`,
             );
-
-            if (loadedDbs.length === 22) {
-              logger.log('System is ready for use');
-            }
           } catch (error) {
             logger.error(error);
           }
