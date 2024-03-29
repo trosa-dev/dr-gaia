@@ -22,6 +22,7 @@ import { loader_noteevents } from './loaders/loader_noteevents';
 import { loader_outputevents } from './loaders/loader_outputevents';
 import { loader_patients } from './loaders/loader_patients';
 import { loader_prescriptions } from './loaders/loader_prescriptions';
+import { loader_procedureevents_mv } from './loaders/loader_procedureevents_mv';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -147,6 +148,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         loadedDbs,
       });
       loader_prescriptions({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_procedureevents_mv({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
