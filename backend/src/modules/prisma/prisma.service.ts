@@ -25,6 +25,7 @@ import { loader_prescriptions } from './loaders/loader_prescriptions';
 import { loader_procedureevents_mv } from './loaders/loader_procedureevents_mv';
 import { loader_procedures_icd } from './loaders/loader_procedures_icd';
 import { loader_services } from './loaders/loader_services';
+import { loader_transfers } from './loaders/loader_transfers';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -169,8 +170,13 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         logger: this.logger,
         loadedDbs,
       });
+      loader_transfers({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
 
-      if (loadedDbs.length === 22) {
+      if (loadedDbs.length === 26) {
         this.logger.log('All databases loaded');
         this.logger.log('System is ready for use');
         return true;
