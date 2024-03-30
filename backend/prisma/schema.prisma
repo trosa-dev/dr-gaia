@@ -444,3 +444,9 @@ model transfers {
   outtime       String
   los           String
 }
+
+model prompt {
+  id     Int      @id @unique @default(autoincrement())
+  prompt String   @db.Text
+  date   DateTime
+}

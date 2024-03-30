@@ -185,8 +185,4 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       console.log(error);
     }
   }
-
-  private delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
 }
