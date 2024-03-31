@@ -1,6 +1,6 @@
-import { Controller, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { ClaudeService } from './claude.service';
+import { Controller, Post, Query } from '@nestjs/common';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ClaudeModel, ClaudeService } from './claude.service';
 
 @ApiTags('Claude')
 @Controller('claude')
@@ -9,7 +9,11 @@ export class ClaudeController {
   constructor(private readonly claudeService: ClaudeService) {}
 
   @Post()
-  getListOfFiles() {
-    return this.claudeService.callClaude();
+  @ApiQuery({ name: 'model', enum: ClaudeModel })
+  runClaude(
+    @Query('model') model: ClaudeModel,
+    @Query('prompt') prompt: string,
+  ) {
+    return this.claudeService.runClaude({ model: model, prompt: prompt });
   }
 }

@@ -1,9 +1,10 @@
+import { PromptsModule } from '../prompt/prompt.module';
 import { ClaudeController } from './claude.controller';
 import { ClaudeService } from './claude.service';
 import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [],
+  imports: [PromptsModule],
   controllers: [ClaudeController],
   providers: [ClaudeService],
   exports: [ClaudeService],
