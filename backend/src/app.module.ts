@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { PromptsModule } from './modules/prompt/prompt.module';
 import { GeminiModule } from './modules/gemini/gemini.module';
 import { ClaudeModule } from './modules/claude/claude.module';
+import { OpenaiModule } from './modules/openai/openai.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ClaudeModule } from './modules/claude/claude.module';
     FilesModule,
     GeminiModule,
     ClaudeModule,
+    OpenaiModule,
   ],
   controllers: [],
   providers: [],
