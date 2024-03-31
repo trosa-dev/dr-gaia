@@ -12,13 +12,11 @@ export class PromptService implements OnModuleInit {
   async onModuleInit() {
     try {
       let prompt = '';
-      const filePath = path.resolve(
-        __dirname,
-        `../../../../app/src/modules/prompt/prompt.txt`,
-      );
+      const filePath = path.resolve(`src/modules/prompt/prompt.txt`);
 
       fs.readFile(filePath, 'utf-8', (err, data) => {
         if (err) {
+          console.log(filePath);
           this.logger.error('Error reading file', err);
           return;
         }

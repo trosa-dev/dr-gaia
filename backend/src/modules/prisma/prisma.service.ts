@@ -179,7 +179,16 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       if (loadedDbs.length === 26) {
         this.logger.log('All databases loaded');
         this.logger.log('System is ready for use');
-        return true;
+        return;
+      }
+
+      const countLoaders = await this.loader.count();
+      if (countLoaders === 26) {
+        this.logger.log('All databases loaded');
+        this.logger.log('System is ready for use');
+        return;
+      } else {
+        this.logger.error('Something went wrong loading databases');
       }
     } catch (error) {
       console.log(error);
