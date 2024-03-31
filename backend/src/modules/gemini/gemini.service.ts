@@ -1,3 +1,6 @@
+// DOCUMENTATION
+// https://console.cloud.google.com/vertex-ai/generative/multimodal/create/text?project=dr-gaia
+
 import { Injectable } from '@nestjs/common';
 import {
   GoogleGenerativeAI,
@@ -5,16 +8,22 @@ import {
   HarmCategory,
 } from '@google/generative-ai';
 
+export enum GeminiModel {
+  gemini_1_0_pro = 'gemini-1.0-pro',
+  gemini_1_0_pro_001 = 'gemini-1.0-pro-001',
+}
+
 @Injectable()
 export class GeminiService {
   constructor() {}
 
-  async callGemini() {
-    const MODEL_NAME = 'gemini-1.0-pro';
+  async runGemini(params: { model: GeminiModel; prompt: string }) {
+    const { model, prompt } = params;
+
     const API_KEY = process.env.GEMINI_API;
 
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+    const geminiModel = genAI.getGenerativeModel({ model: model });
 
     const generationConfig = {
       temperature: 0.9,
@@ -42,17 +51,15 @@ export class GeminiService {
       },
     ];
 
-    const chat = model.startChat({
+    const chat = geminiModel.startChat({
       generationConfig,
       safetySettings,
       history: [],
     });
 
-    const result = await chat.sendMessage(
-      'Um paciente com dor de cabeça. Retorne um array de objetos com a propriedade doenca para cada possibildiade.',
-    );
+    const result = await chat.sendMessage(prompt);
     const response = result.response;
 
-    return response.text();
+    return response;
   }
 }

@@ -1,6 +1,6 @@
-import { GeminiService } from './gemini.service';
-import { Controller, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { GeminiModel, GeminiService } from './gemini.service';
+import { Controller, Post, Query } from '@nestjs/common';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Gemini')
 @Controller('gemini')
@@ -9,7 +9,11 @@ export class GeminiController {
   constructor(private readonly geminiService: GeminiService) {}
 
   @Post()
-  getListOfFiles() {
-    return this.geminiService.callGemini();
+  @ApiQuery({ name: 'model', enum: GeminiModel })
+  runGemini(
+    @Query('model') model: GeminiModel,
+    @Query('prompt') prompt: string,
+  ) {
+    return this.geminiService.runGemini({ model: model, prompt: prompt });
   }
 }
