@@ -1,1 +1,1 @@
-isso é um teste [arte.teste]
+Um paciente do sexo [patients.gender] com idade [patients.age]
