@@ -1,6 +1,6 @@
-import { Controller, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { OpenaiService } from './openai.service';
+import { Controller, Post, Query } from '@nestjs/common';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { OpenaiModel, OpenaiService } from './openai.service';
 
 @ApiTags('OpenAi')
 @Controller('openai')
@@ -9,7 +9,11 @@ export class OpenaiController {
   constructor(private readonly openaiService: OpenaiService) {}
 
   @Post()
-  getListOfFiles() {
-    return this.openaiService.callOpenai();
+  @ApiQuery({ name: 'model', enum: OpenaiModel })
+  runOpenai(
+    @Query('model') model: OpenaiModel,
+    @Query('prompt') prompt: string,
+  ) {
+    return this.openaiService.runOpenai({ model: model, prompt: prompt });
   }
 }
