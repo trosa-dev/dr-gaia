@@ -10,10 +10,10 @@ export class GeminiController {
 
   @Post()
   @ApiQuery({ name: 'model', enum: GeminiModel })
-  runGemini(
+  async runGemini(
     @Query('model') model: GeminiModel,
     @Query('prompt') prompt: string,
   ) {
-    return this.geminiService.runGemini({ model: model, prompt: prompt });
+    return await this.geminiService.runGemini({ model: model, prompt: prompt });
   }
 }

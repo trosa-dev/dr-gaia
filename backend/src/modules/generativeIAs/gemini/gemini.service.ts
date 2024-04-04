@@ -15,15 +15,16 @@ export enum GeminiModel {
 
 @Injectable()
 export class GeminiService {
-  constructor() {}
+  private genAI: GoogleGenerativeAI;
+
+  constructor() {
+    this.genAI = new GoogleGenerativeAI(process.env.GEMINI_API);
+  }
 
   async runGemini(params: { model: GeminiModel; prompt: string }) {
     const { model, prompt } = params;
 
-    const API_KEY = process.env.GEMINI_API;
-
-    const genAI = new GoogleGenerativeAI(API_KEY);
-    const geminiModel = genAI.getGenerativeModel({ model: model });
+    const geminiModel = this.genAI.getGenerativeModel({ model: model });
 
     const generationConfig = {
       temperature: 0.9,
