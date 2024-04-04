@@ -17,14 +17,16 @@ export enum OpenaiModel {
 
 @Injectable()
 export class OpenaiService {
-  constructor() {}
+  private openai: OpenAI;
+
+  constructor() {
+    this.openai = new OpenAI({
+      apiKey: process.env.OPENAI_API, // This is the default and can be omitted
+    });
+  }
 
   async runOpenai(params: { model: OpenaiModel; prompt: string }) {
     const { model, prompt } = params;
-
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API, // This is the default and can be omitted
-    });
 
     const openaiParams: OpenAI.Chat.ChatCompletionCreateParams = {
       model: model,
@@ -36,8 +38,12 @@ export class OpenaiService {
       ],
     };
     const chatCompletion: OpenAI.Chat.ChatCompletion =
-      await openai.chat.completions.create(openaiParams);
+      await this.openai.chat.completions.create(openaiParams);
 
     return chatCompletion;
+  }
+
+  getModels() {
+    return this.openai.models.list();
   }
 }

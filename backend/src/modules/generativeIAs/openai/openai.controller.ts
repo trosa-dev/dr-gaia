@@ -1,4 +1,4 @@
-import { Controller, Post, Query } from '@nestjs/common';
+import { Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { OpenaiModel, OpenaiService } from './openai.service';
 
@@ -7,6 +7,11 @@ import { OpenaiModel, OpenaiService } from './openai.service';
 @Controller()
 export class OpenaiController {
   constructor(private readonly openaiService: OpenaiService) {}
+
+  @Get('models')
+  getModels() {
+    return this.openaiService.getModels();
+  }
 
   @Post()
   @ApiQuery({ name: 'model', enum: OpenaiModel })
