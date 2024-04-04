@@ -15,16 +15,18 @@ export enum ClaudeModel {
 
 @Injectable()
 export class ClaudeService {
-  constructor() {}
+  private anthropic: Anthropic;
+
+  constructor() {
+    this.anthropic = new Anthropic({
+      apiKey: process.env.CLAUDE_API,
+    });
+  }
 
   async runClaude(params: { model: ClaudeModel; prompt: string }) {
     const { model, prompt } = params;
 
-    const anthropic = new Anthropic({
-      apiKey: process.env.CLAUDE_API,
-    });
-
-    const msg = await anthropic.messages.create({
+    const msg = await this.anthropic.messages.create({
       model: model,
       max_tokens: 1000,
       temperature: 0,
