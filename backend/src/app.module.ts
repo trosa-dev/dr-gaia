@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { PromptsModule } from './modules/prompt/prompt.module';
 import { GenerativeIAsModule } from './modules/generativeIAs/generativeIAs.module';
 import { PatientModule } from './modules/patient/patient.module';
+import { AdmissionModule } from './modules/admission/admission.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { PatientModule } from './modules/patient/patient.module';
     FilesModule,
     GenerativeIAsModule,
     PatientModule,
+    AdmissionModule,
   ],
   controllers: [],
   providers: [],
