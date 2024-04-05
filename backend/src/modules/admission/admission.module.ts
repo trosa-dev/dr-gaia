@@ -8,6 +8,6 @@ import { AdmissionController } from './admission.controller';
   imports: [PrismaModule],
   controllers: [AdmissionController],
   providers: [AdmissionService, AdmissionRepository],
-  exports: [AdmissionService],
+  exports: [AdmissionService, AdmissionRepository],
 })
 export class AdmissionModule {}

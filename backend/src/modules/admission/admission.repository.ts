@@ -17,6 +17,14 @@ export class AdmissionRepository {
     });
   }
 
+  async getAllAdmission() {
+    return await this.prismaService.admissions.findMany({
+      select: {
+        hadm_id: true,
+      },
+    });
+  }
+
   async getDiagnosesIcd(hadm_id: string) {
     return await this.prismaService.diagnoses_icd.findMany({
       select: {
