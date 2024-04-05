@@ -450,3 +450,13 @@ model prompt {
   prompt String   @db.Text
   date   DateTime
 }
+
+model response {
+  id                     Int     @id @unique @default(autoincrement())
+  run_id                 String
+  platform               String
+  model                  String
+  processing_time        Int
+  diagnostic_accuracy    Boolean
+  answer_followed_prompt Boolean
+}
