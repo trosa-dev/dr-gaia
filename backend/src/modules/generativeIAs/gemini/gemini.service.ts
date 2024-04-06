@@ -8,8 +8,11 @@ import {
   HarmCategory,
 } from '@google/generative-ai';
 
+//MODELS
+//https://ai.google.dev/models/gemini?hl=pt-br
+
 export enum GeminiModel {
-  gemini_1_0_pro = 'gemini-1.0-pro',
+  gemini_1_5_pro_latest = 'gemini-1.5-pro-latest',
   gemini_1_0_pro_001 = 'gemini-1.0-pro-001',
 }
 

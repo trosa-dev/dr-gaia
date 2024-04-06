@@ -5,10 +5,15 @@
 import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
 
+// MODELS
+//https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo
+
 export enum OpenaiModel {
+  teste = 'gpt-3.5-turbo-instruct',
   gpt_4_0125_preview = 'gpt-4-0125-preview',
   gpt_4_1106_preview = 'gpt-4-1106-preview',
   gpt_4_0613 = 'gpt-4-0613',
+  gpt_4_32k0613 = 'gpt-4-32k-0613',
   gpt_3_5_turbo_0125 = 'gpt-3.5-turbo-0125',
   gpt_3_5_turbo_1106 = 'gpt-3.5-turbo-1106',
   gpt_3_5_turbo_0613 = 'gpt-3.5-turbo-0613',

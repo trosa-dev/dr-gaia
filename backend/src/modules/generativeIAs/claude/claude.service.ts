@@ -4,6 +4,8 @@
 import { Injectable } from '@nestjs/common';
 import Anthropic from '@anthropic-ai/sdk';
 
+// MODELS
+// https://docs.anthropic.com/claude/docs/models-overview
 export enum ClaudeModel {
   claude_3_opus_20240229 = 'claude-3-opus-20240229',
   claude_3_sonnet_20240229 = 'claude-3-sonnet-20240229',
