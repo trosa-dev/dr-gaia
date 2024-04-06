@@ -17,497 +17,446 @@ model loader {
   id String @unique
 }
 
-model concept_relationship_2b {
-  id               Int    @id @default(autoincrement())
-  concept_id_1     String
-  concept_id_2     String
-  relationship_id  String
-  valid_start_date String
-  valid_end_date   String
-  invalid_reason   String
-}
-
-model concept_2b {
-  id               Int    @id @default(autoincrement())
-  concept_id       String
-  concept_name     String
-  domain_id        String
-  vocabulary_id    String
-  concept_class_id String
-  standard_concept String
-  concept_code     String
-  valid_start_date String
-  valid_end_date   String
-  invalid_reason   String
-}
-
-model vocabulary_2b {
-  id                    Int    @id @default(autoincrement())
-  vocabulary_id         String
-  vocabulary_name       String
-  vocabulary_reference  String
-  vocabulary_version    String
-  vocabulary_concept_id String
-}
-
-model attribute_definition {
-  id                        Int    @id @default(autoincrement())
-  attribute_definition_id   String
-  attribute_name            String
-  attribute_description     String
-  attribute_type_concept_id String
-  attribute_syntax          String
-}
-
-model care_site {
-  id                            Int    @id @default(autoincrement())
-  care_site_id                  String
-  care_site_name                String
-  place_of_service_concept_id   String
-  location_id                   String
-  care_site_source_value        String
-  place_of_service_source_value String
-}
-
-model cdm_source {
-  id                             Int    @id @default(autoincrement())
-  cdm_source_name                String
-  cdm_source_abbreviation        String
-  cdm_holder                     String
-  source_description             String
-  source_documentation_reference String
-  cdm_etl_reference              String
-  source_release_date            String
-  cdm_release_date               String
-  cdm_version                    String
-  vocabulary_version             String
-}
-
-model cohort_attribute {
-  id                      Int    @id @default(autoincrement())
-  cohort_definition_id    String
-  subject_id              String
-  cohort_start_date       String
-  cohort_end_date         String
-  attribute_definition_id String
-  value_as_number         String
-  value_as_concept_id     String
-}
-
-model cohort_definition {
-  id                            Int    @id @default(autoincrement())
-  cohort_definition_id          String
-  cohort_definition_name        String
-  cohort_definition_description String
-  definition_type_concept_id    String
-  cohort_definition_syntax      String
-  subject_concept_id            String
-  cohort_initiation_date        String
-}
-
-model cohort {
-  id                   Int    @id @default(autoincrement())
-  cohort_definition_id String
+model admissions {
+  id                   Int    @id @unique @default(autoincrement())
+  row_id               String
   subject_id           String
-  cohort_start_date    String
-  cohort_end_date      String
+  hadm_id              String
+  admittime            String
+  dischtime            String
+  deathtime            String
+  admission_type       String
+  admission_location   String
+  discharge_location   String
+  insurance            String
+  language             String
+  religion             String
+  marital_status       String
+  ethnicity            String
+  edregtime            String
+  edouttime            String
+  diagnosis            String
+  hospital_expire_flag String
+  has_chartevents_data String
 }
 
-model condition_era {
-  id                         Int    @id @default(autoincrement())
-  condition_era_id           String
-  person_id                  String
-  condition_concept_id       String
-  condition_era_start_date   String
-  condition_era_end_date     String
-  condition_occurrence_count String
+model callout {
+  id                     Int    @id @unique @default(autoincrement())
+  row_id                 String
+  subject_id             String
+  hadm_id                String
+  submit_wardid          String
+  submit_careunit        String
+  curr_wardid            String
+  curr_careunit          String
+  callout_wardid         String
+  callout_service        String
+  request_tele           String
+  request_resp           String
+  request_cdiff          String
+  request_mrsa           String
+  request_vre            String
+  callout_status         String
+  callout_outcome        String
+  discharge_wardid       String
+  acknowledge_status     String
+  createtime             String
+  updatetime             String
+  acknowledgetime        String
+  outcometime            String
+  firstreservationtime   String
+  currentreservationtime String
 }
 
-model condition_occurrence {
-  id                            Int    @id @default(autoincrement())
-  condition_occurrence_id       String
-  person_id                     String
-  condition_concept_id          String
-  condition_start_date          String
-  condition_start_datetime      String
-  condition_end_date            String
-  condition_end_datetime        String
-  condition_type_concept_id     String
-  stop_reason                   String
-  provider_id                   String
-  visit_occurrence_id           String
-  visit_detail_id               String
-  condition_source_value        String
-  condition_source_concept_id   String
-  condition_status_source_value String
-  condition_status_concept_id   String
+model caregivers {
+  id          Int    @id @unique @default(autoincrement())
+  row_id      String
+  cgid        String
+  label       String
+  description String
 }
 
-model cost {
-  id                        Int    @id @default(autoincrement())
-  cost_id                   String
-  cost_event_id             String
-  cost_domain_id            String
-  cost_type_concept_id      String
-  currency_concept_id       String
-  total_charge              String
-  total_cost                String
-  total_paid                String
-  paid_by_payer             String
-  paid_by_patient           String
-  paid_patient_copay        String
-  paid_patient_coinsurance  String
-  paid_patient_deductible   String
-  paid_by_primary           String
-  paid_ingredient_cost      String
-  paid_dispensing_fee       String
-  payer_plan_period_id      String
-  amount_allowed            String
-  revenue_code_concept_id   String
-  revenue_code_source_value String
-  drg_concept_id            String
-  drg_source_value          String
+model chartevents {
+  id           Int    @id @unique @default(autoincrement())
+  row_id       String
+  subject_id   String
+  hadm_id      String
+  icustay_id   String
+  itemid       String
+  charttime    String
+  storetime    String
+  cgid         String
+  value        String
+  valuenum     String
+  valueuom     String
+  warning      String
+  error        String
+  resultstatus String
+  stopped      String
 }
 
-model death {
-  id                      Int    @id @default(autoincrement())
-  person_id               String
-  death_date              String
-  death_datetime          String
-  death_type_concept_id   String
-  cause_concept_id        String
-  cause_source_value      String
-  cause_source_concept_id String
+model cptevents {
+  id               Int    @id @unique @default(autoincrement())
+  row_id           String
+  subject_id       String
+  hadm_id          String
+  costcenter       String
+  chartdate        String
+  cpt_cd           String
+  cpt_number       String
+  cpt_suffix       String
+  ticket_id_seq    String
+  sectionheader    String
+  subsectionheader String
+  description      String
 }
 
-model device_exposure {
-  id                             Int    @id @default(autoincrement())
-  device_exposure_id             String
-  person_id                      String
-  device_concept_id              String
-  device_exposure_start_date     String
-  device_exposure_start_datetime String
-  device_exposure_end_date       String
-  device_exposure_end_datetime   String
-  device_type_concept_id         String
-  unique_device_id               String
-  quantity                       String
-  provider_id                    String
-  visit_occurrence_id            String
-  visit_detail_id                String
-  device_source_value            String
-  device_source_concept_id       String
+model d_cpt {
+  id                  Int    @id @unique @default(autoincrement())
+  row_id              String
+  category            String
+  sectionrange        String
+  sectionheader       String
+  subsectionrange     String
+  subsectionheader    String
+  codesuffix          String
+  mincodeinsubsection String
+  maxcodeinsubsection String
 }
 
-model dose_era {
-  id                  Int    @id @default(autoincrement())
-  dose_era_id         String
-  person_id           String
-  drug_concept_id     String
-  unit_concept_id     String
-  dose_value          String
-  dose_era_start_date String
-  dose_era_end_date   String
+model d_icd_diagnoses {
+  id          Int    @id @unique @default(autoincrement())
+  row_id      String
+  icd9_code   String
+  short_title String
+  long_title  String
 }
 
-model drug_era {
-  id                  Int    @id @default(autoincrement())
-  drug_era_id         String
-  person_id           String
-  drug_concept_id     String
-  drug_era_start_date String
-  drug_era_end_date   String
-  drug_exposure_count String
-  gap_days            String
+model d_icd_procedures {
+  id          Int    @id @unique @default(autoincrement())
+  row_id      String
+  icd9_code   String
+  short_title String
+  long_title  String
 }
 
-model drug_exposure {
-  id                           Int    @id @default(autoincrement())
-  drug_exposure_id             String
-  person_id                    String
-  drug_concept_id              String
-  drug_exposure_start_date     String
-  drug_exposure_start_datetime String
-  drug_exposure_end_date       String
-  drug_exposure_end_datetime   String
-  verbatim_end_date            String
-  drug_type_concept_id         String
-  stop_reason                  String
-  refills                      String
-  quantity                     String
-  days_supply                  String
-  sig                          String
-  route_concept_id             String
-  lot_number                   String
-  provider_id                  String
-  visit_occurrence_id          String
-  visit_detail_id              String
-  drug_source_value            String
-  drug_source_concept_id       String
-  route_source_value           String
-  dose_unit_source_value       String
+model d_items {
+  id           Int    @id @unique @default(autoincrement())
+  row_id       String
+  itemid       String
+  label        String
+  abbreviation String
+  dbsource     String
+  linksto      String
+  category     String
+  unitname     String
+  param_type   String
+  conceptid    String
 }
 
-model fact_relationship {
-  id                      Int    @id @default(autoincrement())
-  domain_concept_id_1     String
-  fact_id_1               String
-  domain_concept_id_2     String
-  fact_id_2               String
-  relationship_concept_id String
+model d_labitems {
+  id         Int    @id @unique @default(autoincrement())
+  row_id     String
+  itemid     String
+  label      String
+  fluid      String
+  category   String
+  loinc_code String
 }
 
-model location {
-  id                    Int    @id @default(autoincrement())
-  location_id           String
-  address_1             String
-  address_2             String
-  city                  String
-  state                 String
-  zip                   String
-  county                String
-  location_source_value String
+model datetimeevents {
+  id           Int    @id @unique @default(autoincrement())
+  row_id       String
+  subject_id   String
+  hadm_id      String
+  icustay_id   String
+  itemid       String
+  charttime    String
+  storetime    String
+  cgid         String
+  value        String
+  valueuom     String
+  warning      String
+  error        String
+  resultstatus String
+  stopped      String
 }
 
-model measurement {
-  id                            Int    @id @default(autoincrement())
-  measurement_id                String
-  person_id                     String
-  measurement_concept_id        String
-  measurement_date              String
-  measurement_datetime          String
-  measurement_time              String
-  measurement_type_concept_id   String
-  operator_concept_id           String
-  value_as_number               String
-  value_as_concept_id           String
-  unit_concept_id               String
-  range_low                     String
-  range_high                    String
-  provider_id                   String
-  visit_occurrence_id           String
-  visit_detail_id               String
-  measurement_source_value      String
-  measurement_source_concept_id String
-  unit_source_value             String
-  value_source_value            String
+model diagnoses_icd {
+  id         Int    @id @unique @default(autoincrement())
+  row_id     String
+  subject_id String
+  hadm_id    String
+  seq_num    String
+  icd9_code  String
 }
 
-model metadata {
-  id                       Int    @id @default(autoincrement())
-  metadata_concept_id      String
-  metadata_type_concept_id String
-  name                     String
-  value_as_string          String
-  value_as_concept_id      String
-  metadata_date            String
-  metadata_datetime        String
+model drgcodes {
+  id            Int    @id @unique @default(autoincrement())
+  row_id        String
+  subject_id    String
+  hadm_id       String
+  drg_type      String
+  drg_code      String
+  description   String
+  drg_severity  String
+  drg_mortality String
 }
 
-model note_nlp {
-  id                         Int    @id @default(autoincrement())
-  note_nlp_id                String
-  note_id                    String
-  section_concept_id         String
-  snippet                    String
-  offset                     String
-  lexical_variant            String
-  note_nlp_concept_id        String
-  note_nlp_source_concept_id String
-  nlp_system                 String
-  nlp_date                   String
-  nlp_datetime               String
-  term_exists                String
-  term_temporal              String
-  term_modifiers             String
+model icustays {
+  id             Int    @id @unique @default(autoincrement())
+  row_id         String
+  subject_id     String
+  hadm_id        String
+  icustay_id     String
+  dbsource       String
+  first_careunit String
+  last_careunit  String
+  first_wardid   String
+  last_wardid    String
+  intime         String
+  outtime        String
+  los            String
 }
 
-model note {
-  id                    Int    @id @default(autoincrement())
-  note_id               String
-  person_id             String
-  note_date             String
-  note_datetime         String
-  note_type_concept_id  String
-  note_class_concept_id String
-  note_title            String
-  note_text             String
-  encoding_concept_id   String
-  language_concept_id   String
-  provider_id           String
-  visit_occurrence_id   String
-  visit_detail_id       String
-  note_source_value     String
+model inputevents_cv {
+  id                Int    @id @unique @default(autoincrement())
+  row_id            String
+  subject_id        String
+  hadm_id           String
+  icustay_id        String
+  charttime         String
+  itemid            String
+  amount            String
+  amountuom         String
+  rate              String
+  rateuom           String
+  storetime         String
+  cgid              String
+  orderid           String
+  linkorderid       String
+  stopped           String
+  newbottle         String
+  originalamount    String
+  originalamountuom String
+  originalroute     String
+  originalrate      String
+  originalrateuom   String
+  originalsite      String
 }
 
-model observation_period {
-  id                            Int    @id @default(autoincrement())
-  observation_period_id         String
-  person_id                     String
-  observation_period_start_date String
-  observation_period_end_date   String
-  period_type_concept_id        String
+model inputevents_mv {
+  id                            Int    @id @unique @default(autoincrement())
+  row_id                        String
+  subject_id                    String
+  hadm_id                       String
+  icustay_id                    String
+  starttime                     String
+  endtime                       String
+  itemid                        String
+  amount                        String
+  amountuom                     String
+  rate                          String
+  rateuom                       String
+  storetime                     String
+  cgid                          String
+  orderid                       String
+  linkorderid                   String
+  ordercategoryname             String
+  secondaryordercategoryname    String
+  ordercomponenttypedescription String
+  ordercategorydescription      String
+  patientweight                 String
+  totalamount                   String
+  totalamountuom                String
+  isopenbag                     String
+  continueinnextdept            String
+  cancelreason                  String
+  statusdescription             String
+  comments_editedby             String
+  comments_canceledby           String
+  comments_date                 String
+  originalamount                String
+  originalrate                  String
 }
 
-model observation {
-  id                            Int    @id @default(autoincrement())
-  observation_id                String
-  person_id                     String
-  observation_concept_id        String
-  observation_date              String
-  observation_datetime          String
-  observation_type_concept_id   String
-  value_as_number               String
-  value_as_string               String
-  value_as_concept_id           String
-  qualifier_concept_id          String
-  unit_concept_id               String
-  provider_id                   String
-  visit_occurrence_id           String
-  visit_detail_id               String
-  observation_source_value      String
-  observation_source_concept_id String
-  unit_source_value             String
-  qualifier_source_value        String
+model labevents {
+  id         Int    @id @unique @default(autoincrement())
+  row_id     String
+  subject_id String
+  hadm_id    String
+  itemid     String
+  charttime  String
+  value      String
+  valuenum   String
+  valueuom   String
+  flag       String
 }
 
-model payer_plan_period {
-  id                            Int    @id @default(autoincrement())
-  payer_plan_period_id          String
-  person_id                     String
-  payer_plan_period_start_date  String
-  payer_plan_period_end_date    String
-  payer_concept_id              String
-  payer_source_value            String
-  payer_source_concept_id       String
-  plan_concept_id               String
-  plan_source_value             String
-  plan_source_concept_id        String
-  sponsor_concept_id            String
-  sponsor_source_value          String
-  sponsor_source_concept_id     String
-  family_source_value           String
-  stop_reason_concept_id        String
-  stop_reason_source_value      String
-  stop_reason_source_concept_id String
+model microbiologyevents {
+  id                  Int    @id @unique @default(autoincrement())
+  row_id              String
+  subject_id          String
+  hadm_id             String
+  chartdate           String
+  charttime           String
+  spec_itemid         String
+  spec_type_desc      String
+  org_itemid          String
+  org_name            String
+  isolate_num         String
+  ab_itemid           String
+  ab_name             String
+  dilution_text       String
+  dilution_comparison String
+  dilution_value      String
+  interpretation      String
 }
 
-model person {
-  id                          Int    @id @default(autoincrement())
-  person_id                   String
-  gender_concept_id           String
-  year_of_birth               String
-  month_of_birth              String
-  day_of_birth                String
-  birth_datetime              String
-  race_concept_id             String
-  ethnicity_concept_id        String
-  location_id                 String
-  provider_id                 String
-  care_site_id                String
-  person_source_value         String
-  gender_source_value         String
-  gender_source_concept_id    String
-  race_source_value           String
-  race_source_concept_id      String
-  ethnicity_source_value      String
-  ethnicity_source_concept_id String
+model noteevents {
+  id          Int    @id @unique @default(autoincrement())
+  row_id      String
+  subject_id  String
+  hadm_id     String
+  chartdate   String
+  charttime   String
+  storetime   String
+  category    String
+  description String
+  cgid        String
+  iserror     String
+  text        String
 }
 
-model procedure_occurrence {
-  id                          Int    @id @default(autoincrement())
-  procedure_occurrence_id     String
-  person_id                   String
-  procedure_concept_id        String
-  procedure_date              String
-  procedure_datetime          String
-  procedure_type_concept_id   String
-  modifier_concept_id         String
-  quantity                    String
-  provider_id                 String
-  visit_occurrence_id         String
-  visit_detail_id             String
-  procedure_source_value      String
-  procedure_source_concept_id String
-  modifier_source_value       String
+model outputevents {
+  id         Int    @id @unique @default(autoincrement())
+  row_id     String
+  subject_id String
+  hadm_id    String
+  icustay_id String
+  charttime  String
+  itemid     String
+  value      String
+  valueuom   String
+  storetime  String
+  cgid       String
+  stopped    String
+  newbottle  String
+  iserror    String
 }
 
-model provider {
-  id                          Int    @id @default(autoincrement())
-  provider_id                 String
-  provider_name               String
-  npi                         String
-  dea                         String
-  specialty_concept_id        String
-  care_site_id                String
-  year_of_birth               String
-  gender_concept_id           String
-  provider_source_value       String
-  specialty_source_value      String
-  specialty_source_concept_id String
-  gender_source_value         String
-  gender_source_concept_id    String
+model patients {
+  id          Int    @id @unique @default(autoincrement())
+  row_id      String
+  subject_id  String
+  gender      String
+  dob         String
+  dod         String
+  dod_hosp    String
+  dod_ssn     String
+  expire_flag String
 }
 
-model specimen {
-  id                          Int    @id @default(autoincrement())
-  specimen_id                 String
-  person_id                   String
-  specimen_concept_id         String
-  specimen_type_concept_id    String
-  specimen_date               String
-  specimen_datetime           String
-  quantity                    String
-  unit_concept_id             String
-  anatomic_site_concept_id    String
-  disease_status_concept_id   String
-  specimen_source_id          String
-  specimen_source_value       String
-  unit_source_value           String
-  anatomic_site_source_value  String
-  disease_status_source_value String
+model prescriptions {
+  id                Int    @id @unique @default(autoincrement())
+  row_id            String
+  subject_id        String
+  hadm_id           String
+  icustay_id        String
+  startdate         String
+  enddate           String
+  drug_type         String
+  drug              String
+  drug_name_poe     String
+  drug_name_generic String
+  formulary_drug_cd String
+  gsn               String
+  ndc               String
+  prod_strength     String
+  dose_val_rx       String
+  dose_unit_rx      String
+  form_val_disp     String
+  form_unit_disp    String
+  route             String
 }
 
-model visit_detail {
-  id                             Int    @id @default(autoincrement())
-  visit_detail_id                String
-  person_id                      String
-  visit_detail_concept_id        String
-  visit_detail_start_date        String
-  visit_detail_start_datetime    String
-  visit_detail_end_date          String
-  visit_detail_end_datetime      String
-  visit_detail_type_concept_id   String
-  provider_id                    String
-  care_site_id                   String
-  admitting_source_concept_id    String
-  discharge_to_concept_id        String
-  preceding_visit_detail_id      String
-  visit_detail_source_value      String
-  visit_detail_source_concept_id String
-  admitting_source_value         String
-  discharge_to_source_value      String
-  visit_detail_parent_id         String
-  visit_occurrence_id            String
+model procedureevents_mv {
+  id                         Int    @id @unique @default(autoincrement())
+  row_id                     String
+  subject_id                 String
+  hadm_id                    String
+  icustay_id                 String
+  starttime                  String
+  endtime                    String
+  itemid                     String
+  value                      String
+  valueuom                   String
+  location                   String
+  locationcategory           String
+  storetime                  String
+  cgid                       String
+  orderid                    String
+  linkorderid                String
+  ordercategoryname          String
+  secondaryordercategoryname String
+  ordercategorydescription   String
+  isopenbag                  String
+  continueinnextdept         String
+  cancelreason               String
+  statusdescription          String
+  comments_editedby          String
+  comments_canceledby        String
+  comments_date              String
 }
 
-model visit_occurrence {
-  id                            Int    @id @default(autoincrement())
-  visit_occurrence_id           String
-  person_id                     String
-  visit_concept_id              String
-  visit_start_date              String
-  visit_start_datetime          String
-  visit_end_date                String
-  visit_end_datetime            String
-  visit_type_concept_id         String
-  provider_id                   String
-  care_site_id                  String
-  visit_source_value            String
-  visit_source_concept_id       String
-  admitting_source_concept_id   String
-  admitting_source_value        String
-  discharge_to_concept_id       String
-  discharge_to_source_value     String
-  preceding_visit_occurrence_id String
+model procedures_icd {
+  id         Int    @id @unique @default(autoincrement())
+  row_id     String
+  subject_id String
+  hadm_id    String
+  seq_num    String
+  icd9_code  String
+}
+
+model services {
+  id           Int    @id @unique @default(autoincrement())
+  row_id       String
+  subject_id   String
+  hadm_id      String
+  transfertime String
+  prev_service String
+  curr_service String
+}
+
+model transfers {
+  id            Int    @id @unique @default(autoincrement())
+  row_id        String
+  subject_id    String
+  hadm_id       String
+  icustay_id    String
+  dbsource      String
+  eventtype     String
+  prev_careunit String
+  curr_careunit String
+  prev_wardid   String
+  curr_wardid   String
+  intime        String
+  outtime       String
+  los           String
+}
+
+model prompt {
+  id     Int      @id @unique @default(autoincrement())
+  prompt String   @db.Text
+  date   DateTime
+}
+
+model response {
+  id                     Int     @id @unique @default(autoincrement())
+  run_id                 String
+  platform               String
+  model                  String
+  processing_time        Int
+  diagnostic_accuracy    Boolean
+  answer_followed_prompt Boolean
 }

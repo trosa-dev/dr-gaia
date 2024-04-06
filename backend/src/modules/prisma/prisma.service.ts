@@ -1,27 +1,31 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { loader_2b_concept_relationship } from './loaders/loader_2b_concept_relationship';
-import { loader_2b_concept } from './loaders/loader_2b_concept';
-import { loader_2b_vocabulary } from './loaders/loader_2b_vocabulary';
-import { loader_care_site } from './loaders/loader_care_site';
-import { loader_cdm_source } from './loaders/loader_cdm_source';
-import { loader_condition_era } from './loaders/loader_condition_era';
-import { loader_condition_occurrence } from './loaders/loader_condition_occurrence.';
-import { loader_death } from './loaders/loader_death';
-import { loader_device_exposure } from './loaders/loader_device_exposure';
-import { loader_dose_era } from './loaders/loader_dose_era';
-import { loader_drug_era } from './loaders/loader_drug_era';
-import { loader_drug_exposure } from './loaders/loader_drug_exposure';
-import { loader_fact_relationship } from './loaders/loader_fact_relationship';
-import { loader_location } from './loaders/loader_location';
-import { loader_measurement } from './loaders/loader_measurement';
-import { loader_observation_period } from './loaders/loader_observation_period';
-import { loader_observation } from './loaders/loader_observation';
-import { loader_person } from './loaders/loader_person';
-import { loader_procedure_occurrence } from './loaders/loader_procedure_occurrence';
-import { loader_specimen } from './loaders/loader_specimen';
-import { loader_visit_detail } from './loaders/loader_visit_detail';
-import { loader_visit_occurrence } from './loaders/loader_visit_occurrence';
+import { loader_admissions } from './loaders/loader_admissions';
+import { loader_callout } from './loaders/loader_callout';
+import { loader_caregivers } from './loaders/loader_caregivers';
+import { loader_chartevents } from './loaders/loader_chartevents';
+import { loader_cptevents } from './loaders/loader_cptevents';
+import { loader_d_cpt } from './loaders/loader_d_cpt';
+import { loader_d_icd_diagnoses } from './loaders/loader_d_icd_diagnoses';
+import { loader_d_icd_procedures } from './loaders/loader_d_icd_procedures';
+import { loader_d_items } from './loaders/loader_d_items';
+import { loader_d_labitems } from './loaders/loader_d_labitems';
+import { loader_datetimeevents } from './loaders/loader_datetimeevents';
+import { loader_diagnoses_icd } from './loaders/loader_diagnoses_icd';
+import { loader_drgcodes } from './loaders/loader_drgcodes';
+import { loader_icustays } from './loaders/loader_icustays';
+import { loader_inputevents_cv } from './loaders/loader_inputevents_cv';
+import { loader_inputevents_mv } from './loaders/loader_inputevents_mv';
+import { loader_labevents } from './loaders/loader_labevents';
+import { loader_microbiologyevents } from './loaders/loader_microbiologyevents';
+import { loader_noteevents } from './loaders/loader_noteevents';
+import { loader_outputevents } from './loaders/loader_outputevents';
+import { loader_patients } from './loaders/loader_patients';
+import { loader_prescriptions } from './loaders/loader_prescriptions';
+import { loader_procedureevents_mv } from './loaders/loader_procedureevents_mv';
+import { loader_procedures_icd } from './loaders/loader_procedures_icd';
+import { loader_services } from './loaders/loader_services';
+import { loader_transfers } from './loaders/loader_transfers';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -41,130 +45,153 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 
       const loadedDbs = [];
 
-      loader_2b_concept_relationship({
+      loader_admissions({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_2b_concept({
+      loader_callout({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_2b_vocabulary({
+      loader_caregivers({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      //loader not needed for attribute_definition.csv - no data
-      loader_care_site({ prismaService: this, logger: this.logger, loadedDbs });
-      loader_cdm_source({
+      loader_chartevents({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      //loader not needed for cohort_attribute.csv - no data
-      //loader not needed for cohort_definition.csv - no data
-      //loader not needed for cohort.csv - no data
-      loader_condition_era({
+      loader_cptevents({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_condition_occurrence({
+      loader_d_cpt({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      //loader not needed for cost.csv - no data
-      loader_death({
+      loader_d_icd_diagnoses({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_device_exposure({
+      loader_d_icd_procedures({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_dose_era({
+      loader_d_items({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_drug_era({
+      loader_d_labitems({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_drug_exposure({
+      loader_datetimeevents({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_fact_relationship({
+      loader_diagnoses_icd({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_location({ prismaService: this, logger: this.logger, loadedDbs });
-      loader_measurement({
+      loader_drgcodes({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      //loader not needed for metadata.csv - no data
-      //loader not needed for note_nlp.csv - no data
-      //loader not needed for note.csv - no data
-      loader_observation_period({
+      loader_icustays({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_observation({
+      loader_inputevents_cv({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      //loader not needed for payer_plan_period.csv - no data
-      loader_person({
+      loader_inputevents_mv({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_procedure_occurrence({
+      loader_labevents({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      //loader not needed for provider.csv - no data
-      loader_specimen({
+      loader_microbiologyevents({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_visit_detail({
+      loader_noteevents({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
-      loader_visit_occurrence({
+      loader_outputevents({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_patients({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_prescriptions({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_procedureevents_mv({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_procedures_icd({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_services({
+        prismaService: this,
+        logger: this.logger,
+        loadedDbs,
+      });
+      loader_transfers({
         prismaService: this,
         logger: this.logger,
         loadedDbs,
       });
 
-      if (loadedDbs.length === 22) {
+      if (loadedDbs.length === 26) {
         this.logger.log('All databases loaded');
         this.logger.log('System is ready for use');
-        return true;
+        return;
+      }
+
+      const countLoaders = await this.loader.count();
+      if (countLoaders === 26) {
+        this.logger.log('All databases loaded');
+        this.logger.log('System is ready for use');
+        return;
+      } else {
+        this.logger.error('Something went wrong loading databases');
       }
     } catch (error) {
       console.log(error);
     }
-  }
-
-  private delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
