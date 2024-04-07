@@ -459,4 +459,6 @@ model response {
   processing_time        Int
   diagnostic_accuracy    Boolean
   answer_followed_prompt Boolean
+  temperature            Int
+  error                  String
 }
