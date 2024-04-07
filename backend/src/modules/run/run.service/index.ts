@@ -5,6 +5,8 @@ import { AdmissionService } from 'src/modules/admission/admission.service';
 import { OpenaiService } from 'src/modules/generativeIAs/openai/openai.service';
 import { ClaudeService } from 'src/modules/generativeIAs/claude/claude.service';
 import { GeminiService } from 'src/modules/generativeIAs/gemini/gemini.service';
+import { models } from './constants/models';
+import { handleModel } from './functions/handleModel';
 
 @Injectable()
 export class RunService {
@@ -17,20 +19,42 @@ export class RunService {
     private readonly geminiService: GeminiService,
   ) {}
 
-  async run(params: { run_id: string; prompt: string }) {
-    const { run_id, prompt } = params;
+  async run(params: { run_id: string; prompt: string; temperature: number }) {
+    async function delay(ms: number) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    const { run_id, prompt, temperature } = params;
 
     const admissions = await this.admissionRepository.getAllAdmission();
 
-    const teste = [];
+    const deletar: any[] = [];
 
-    //for (let i = 0; i < admissions.length; i++) {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < admissions.length; i++) {
       const admission = await this.admissionService.getAdmission(
         admissions[i].hadm_id,
       );
+
+      for (let j = 0; j < models.length; j++) {
+        const model = handleModel(models[j]);
+
+        switch (model) {
+          case 'openai':
+            console.log({ openai: admission });
+            break;
+          case 'claude':
+            console.log({ claude: admission });
+            break;
+          case 'gemini':
+            console.log({ gemini: admission });
+            break;
+          default:
+            throw 'model is not openai | claude | gemini';
+        }
+        await delay(2000);
+      }
     }
 
-    return teste;
+    return { deletar };
   }
 }
