@@ -13,7 +13,12 @@ export class ClaudeController {
   runClaude(
     @Query('model') model: ClaudeModel,
     @Query('prompt') prompt: string,
+    @Query('temperature') temperature: string,
   ) {
-    return this.claudeService.runClaude({ model: model, prompt: prompt });
+    return this.claudeService.runClaude({
+      model: model,
+      prompt: prompt,
+      temperature: Number(temperature),
+    });
   }
 }

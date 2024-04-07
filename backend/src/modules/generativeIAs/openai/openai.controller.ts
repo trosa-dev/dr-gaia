@@ -18,7 +18,12 @@ export class OpenaiController {
   runOpenai(
     @Query('model') model: OpenaiModel,
     @Query('prompt') prompt: string,
+    @Query('temperature') temperature: string,
   ) {
-    return this.openaiService.runOpenai({ model: model, prompt: prompt });
+    return this.openaiService.runOpenai({
+      model: model,
+      prompt: prompt,
+      temperature: Number(temperature),
+    });
   }
 }

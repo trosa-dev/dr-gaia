@@ -13,7 +13,12 @@ export class GeminiController {
   async runGemini(
     @Query('model') model: GeminiModel,
     @Query('prompt') prompt: string,
+    @Query('temperature') temperature: string,
   ) {
-    return await this.geminiService.runGemini({ model: model, prompt: prompt });
+    return await this.geminiService.runGemini({
+      model: model,
+      prompt: prompt,
+      temperature: Number(temperature),
+    });
   }
 }

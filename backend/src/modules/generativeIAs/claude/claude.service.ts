@@ -25,26 +25,34 @@ export class ClaudeService {
     });
   }
 
-  async runClaude(params: { model: ClaudeModel; prompt: string }) {
-    const { model, prompt } = params;
+  async runClaude(params: {
+    model: ClaudeModel;
+    prompt: string;
+    temperature: number;
+  }) {
+    try {
+      const { model, prompt, temperature } = params;
 
-    const msg = await this.anthropic.messages.create({
-      model: model,
-      max_tokens: 1000,
-      temperature: 0,
-      messages: [
-        {
-          role: 'user',
-          content: [
-            {
-              type: 'text',
-              text: prompt,
-            },
-          ],
-        },
-      ],
-    });
+      const msg = await this.anthropic.messages.create({
+        model: model,
+        max_tokens: 1000,
+        temperature,
+        messages: [
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'text',
+                text: prompt,
+              },
+            ],
+          },
+        ],
+      });
 
-    return msg;
+      return { message: msg.content[0].text, usage: msg.usage };
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

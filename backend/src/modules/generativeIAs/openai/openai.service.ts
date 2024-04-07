@@ -9,11 +9,9 @@ import OpenAI from 'openai';
 //https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo
 
 export enum OpenaiModel {
-  teste = 'gpt-3.5-turbo-instruct',
   gpt_4_0125_preview = 'gpt-4-0125-preview',
   gpt_4_1106_preview = 'gpt-4-1106-preview',
   gpt_4_0613 = 'gpt-4-0613',
-  gpt_4_32k0613 = 'gpt-4-32k-0613',
   gpt_3_5_turbo_0125 = 'gpt-3.5-turbo-0125',
   gpt_3_5_turbo_1106 = 'gpt-3.5-turbo-1106',
   gpt_3_5_turbo_0613 = 'gpt-3.5-turbo-0613',
@@ -30,22 +28,35 @@ export class OpenaiService {
     });
   }
 
-  async runOpenai(params: { model: OpenaiModel; prompt: string }) {
-    const { model, prompt } = params;
+  async runOpenai(params: {
+    model: OpenaiModel;
+    prompt: string;
+    temperature: number;
+  }) {
+    try {
+      const { model, prompt, temperature } = params;
 
-    const openaiParams: OpenAI.Chat.ChatCompletionCreateParams = {
-      model: model,
-      messages: [
-        {
-          role: 'user',
-          content: prompt,
-        },
-      ],
-    };
-    const chatCompletion: OpenAI.Chat.ChatCompletion =
-      await this.openai.chat.completions.create(openaiParams);
+      const openaiParams: OpenAI.Chat.ChatCompletionCreateParams = {
+        model: model,
+        temperature,
+        messages: [
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+      };
 
-    return chatCompletion;
+      const chatCompletion: OpenAI.Chat.ChatCompletion =
+        await this.openai.chat.completions.create(openaiParams);
+
+      return {
+        message: chatCompletion.choices[0].message.content,
+        usage: chatCompletion.usage,
+      };
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   getModels() {
