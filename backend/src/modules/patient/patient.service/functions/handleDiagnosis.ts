@@ -10,12 +10,10 @@ export async function handleDiagnosis(params: {
 
   const admissions: Promise<any>[] = [];
   const icd9Codes: Promise<any>[] = [];
-  const chartEvents: Promise<any>[] = [];
 
   diagnosis.map((item) => {
     admissions.push(patientRepository.getHospitalAdmissions(item.hadm_id));
     icd9Codes.push(patientRepository.getDIdc9Code(item.icd9_code));
-    chartEvents.push(patientRepository.getChartEvents(item.hadm_id));
   });
 
   const admissionsQuery = await Promise.all([...admissions]);

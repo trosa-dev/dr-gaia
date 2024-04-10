@@ -76,28 +76,4 @@ export class PatientRepository {
       },
     });
   }
-
-  async getChartEvents(hadm_id: string) {
-    return await this.prismaService.chartevents.findMany({
-      select: {
-        cgid: true,
-        charttime: true,
-        error: true,
-        hadm_id: true,
-        icustay_id: true,
-        id: true,
-        itemid: true,
-        resultstatus: true,
-        stopped: true,
-        storetime: true,
-        value: true,
-        valuenum: true,
-        valueuom: true,
-        warning: true,
-      },
-      where: {
-        hadm_id: hadm_id,
-      },
-    });
-  }
 }

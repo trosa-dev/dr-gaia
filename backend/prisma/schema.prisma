@@ -17,6 +17,24 @@ model loader {
   id String @unique
 }
 
+model prompt {
+  id     Int      @id @unique @default(autoincrement())
+  prompt String   @db.Text
+  date   DateTime
+}
+
+model response {
+  id                     Int     @id @unique @default(autoincrement())
+  run_id                 String
+  platform               String
+  model                  String
+  processing_time        Int
+  diagnostic_accuracy    Boolean
+  answer_followed_prompt Boolean
+  temperature            Int
+  error                  String
+}
+
 model admissions {
   id                   Int    @id @unique @default(autoincrement())
   row_id               String
@@ -40,311 +58,6 @@ model admissions {
   has_chartevents_data String
 }
 
-model callout {
-  id                     Int    @id @unique @default(autoincrement())
-  row_id                 String
-  subject_id             String
-  hadm_id                String
-  submit_wardid          String
-  submit_careunit        String
-  curr_wardid            String
-  curr_careunit          String
-  callout_wardid         String
-  callout_service        String
-  request_tele           String
-  request_resp           String
-  request_cdiff          String
-  request_mrsa           String
-  request_vre            String
-  callout_status         String
-  callout_outcome        String
-  discharge_wardid       String
-  acknowledge_status     String
-  createtime             String
-  updatetime             String
-  acknowledgetime        String
-  outcometime            String
-  firstreservationtime   String
-  currentreservationtime String
-}
-
-model caregivers {
-  id          Int    @id @unique @default(autoincrement())
-  row_id      String
-  cgid        String
-  label       String
-  description String
-}
-
-model chartevents {
-  id           Int    @id @unique @default(autoincrement())
-  row_id       String
-  subject_id   String
-  hadm_id      String
-  icustay_id   String
-  itemid       String
-  charttime    String
-  storetime    String
-  cgid         String
-  value        String
-  valuenum     String
-  valueuom     String
-  warning      String
-  error        String
-  resultstatus String
-  stopped      String
-}
-
-model cptevents {
-  id               Int    @id @unique @default(autoincrement())
-  row_id           String
-  subject_id       String
-  hadm_id          String
-  costcenter       String
-  chartdate        String
-  cpt_cd           String
-  cpt_number       String
-  cpt_suffix       String
-  ticket_id_seq    String
-  sectionheader    String
-  subsectionheader String
-  description      String
-}
-
-model d_cpt {
-  id                  Int    @id @unique @default(autoincrement())
-  row_id              String
-  category            String
-  sectionrange        String
-  sectionheader       String
-  subsectionrange     String
-  subsectionheader    String
-  codesuffix          String
-  mincodeinsubsection String
-  maxcodeinsubsection String
-}
-
-model d_icd_diagnoses {
-  id          Int    @id @unique @default(autoincrement())
-  row_id      String
-  icd9_code   String
-  short_title String
-  long_title  String
-}
-
-model d_icd_procedures {
-  id          Int    @id @unique @default(autoincrement())
-  row_id      String
-  icd9_code   String
-  short_title String
-  long_title  String
-}
-
-model d_items {
-  id           Int    @id @unique @default(autoincrement())
-  row_id       String
-  itemid       String
-  label        String
-  abbreviation String
-  dbsource     String
-  linksto      String
-  category     String
-  unitname     String
-  param_type   String
-  conceptid    String
-}
-
-model d_labitems {
-  id         Int    @id @unique @default(autoincrement())
-  row_id     String
-  itemid     String
-  label      String
-  fluid      String
-  category   String
-  loinc_code String
-}
-
-model datetimeevents {
-  id           Int    @id @unique @default(autoincrement())
-  row_id       String
-  subject_id   String
-  hadm_id      String
-  icustay_id   String
-  itemid       String
-  charttime    String
-  storetime    String
-  cgid         String
-  value        String
-  valueuom     String
-  warning      String
-  error        String
-  resultstatus String
-  stopped      String
-}
-
-model diagnoses_icd {
-  id         Int    @id @unique @default(autoincrement())
-  row_id     String
-  subject_id String
-  hadm_id    String
-  seq_num    String
-  icd9_code  String
-}
-
-model drgcodes {
-  id            Int    @id @unique @default(autoincrement())
-  row_id        String
-  subject_id    String
-  hadm_id       String
-  drg_type      String
-  drg_code      String
-  description   String
-  drg_severity  String
-  drg_mortality String
-}
-
-model icustays {
-  id             Int    @id @unique @default(autoincrement())
-  row_id         String
-  subject_id     String
-  hadm_id        String
-  icustay_id     String
-  dbsource       String
-  first_careunit String
-  last_careunit  String
-  first_wardid   String
-  last_wardid    String
-  intime         String
-  outtime        String
-  los            String
-}
-
-model inputevents_cv {
-  id                Int    @id @unique @default(autoincrement())
-  row_id            String
-  subject_id        String
-  hadm_id           String
-  icustay_id        String
-  charttime         String
-  itemid            String
-  amount            String
-  amountuom         String
-  rate              String
-  rateuom           String
-  storetime         String
-  cgid              String
-  orderid           String
-  linkorderid       String
-  stopped           String
-  newbottle         String
-  originalamount    String
-  originalamountuom String
-  originalroute     String
-  originalrate      String
-  originalrateuom   String
-  originalsite      String
-}
-
-model inputevents_mv {
-  id                            Int    @id @unique @default(autoincrement())
-  row_id                        String
-  subject_id                    String
-  hadm_id                       String
-  icustay_id                    String
-  starttime                     String
-  endtime                       String
-  itemid                        String
-  amount                        String
-  amountuom                     String
-  rate                          String
-  rateuom                       String
-  storetime                     String
-  cgid                          String
-  orderid                       String
-  linkorderid                   String
-  ordercategoryname             String
-  secondaryordercategoryname    String
-  ordercomponenttypedescription String
-  ordercategorydescription      String
-  patientweight                 String
-  totalamount                   String
-  totalamountuom                String
-  isopenbag                     String
-  continueinnextdept            String
-  cancelreason                  String
-  statusdescription             String
-  comments_editedby             String
-  comments_canceledby           String
-  comments_date                 String
-  originalamount                String
-  originalrate                  String
-}
-
-model labevents {
-  id         Int    @id @unique @default(autoincrement())
-  row_id     String
-  subject_id String
-  hadm_id    String
-  itemid     String
-  charttime  String
-  value      String
-  valuenum   String
-  valueuom   String
-  flag       String
-}
-
-model microbiologyevents {
-  id                  Int    @id @unique @default(autoincrement())
-  row_id              String
-  subject_id          String
-  hadm_id             String
-  chartdate           String
-  charttime           String
-  spec_itemid         String
-  spec_type_desc      String
-  org_itemid          String
-  org_name            String
-  isolate_num         String
-  ab_itemid           String
-  ab_name             String
-  dilution_text       String
-  dilution_comparison String
-  dilution_value      String
-  interpretation      String
-}
-
-model noteevents {
-  id          Int    @id @unique @default(autoincrement())
-  row_id      String
-  subject_id  String
-  hadm_id     String
-  chartdate   String
-  charttime   String
-  storetime   String
-  category    String
-  description String
-  cgid        String
-  iserror     String
-  text        String
-}
-
-model outputevents {
-  id         Int    @id @unique @default(autoincrement())
-  row_id     String
-  subject_id String
-  hadm_id    String
-  icustay_id String
-  charttime  String
-  itemid     String
-  value      String
-  valueuom   String
-  storetime  String
-  cgid       String
-  stopped    String
-  newbottle  String
-  iserror    String
-}
-
 model patients {
   id          Int    @id @unique @default(autoincrement())
   row_id      String
@@ -357,59 +70,7 @@ model patients {
   expire_flag String
 }
 
-model prescriptions {
-  id                Int    @id @unique @default(autoincrement())
-  row_id            String
-  subject_id        String
-  hadm_id           String
-  icustay_id        String
-  startdate         String
-  enddate           String
-  drug_type         String
-  drug              String
-  drug_name_poe     String
-  drug_name_generic String
-  formulary_drug_cd String
-  gsn               String
-  ndc               String
-  prod_strength     String
-  dose_val_rx       String
-  dose_unit_rx      String
-  form_val_disp     String
-  form_unit_disp    String
-  route             String
-}
-
-model procedureevents_mv {
-  id                         Int    @id @unique @default(autoincrement())
-  row_id                     String
-  subject_id                 String
-  hadm_id                    String
-  icustay_id                 String
-  starttime                  String
-  endtime                    String
-  itemid                     String
-  value                      String
-  valueuom                   String
-  location                   String
-  locationcategory           String
-  storetime                  String
-  cgid                       String
-  orderid                    String
-  linkorderid                String
-  ordercategoryname          String
-  secondaryordercategoryname String
-  ordercategorydescription   String
-  isopenbag                  String
-  continueinnextdept         String
-  cancelreason               String
-  statusdescription          String
-  comments_editedby          String
-  comments_canceledby        String
-  comments_date              String
-}
-
-model procedures_icd {
+model diagnoses_icd {
   id         Int    @id @unique @default(autoincrement())
   row_id     String
   subject_id String
@@ -418,47 +79,386 @@ model procedures_icd {
   icd9_code  String
 }
 
-model services {
-  id           Int    @id @unique @default(autoincrement())
-  row_id       String
-  subject_id   String
-  hadm_id      String
-  transfertime String
-  prev_service String
-  curr_service String
+model d_icd_diagnoses {
+  id          Int    @id @unique @default(autoincrement())
+  row_id      String
+  icd9_code   String
+  short_title String
+  long_title  String
 }
 
-model transfers {
-  id            Int    @id @unique @default(autoincrement())
-  row_id        String
-  subject_id    String
-  hadm_id       String
-  icustay_id    String
-  dbsource      String
-  eventtype     String
-  prev_careunit String
-  curr_careunit String
-  prev_wardid   String
-  curr_wardid   String
-  intime        String
-  outtime       String
-  los           String
-}
+// model callout {
+//   id                     Int    @id @unique @default(autoincrement())
+//   row_id                 String
+//   subject_id             String
+//   hadm_id                String
+//   submit_wardid          String
+//   submit_careunit        String
+//   curr_wardid            String
+//   curr_careunit          String
+//   callout_wardid         String
+//   callout_service        String
+//   request_tele           String
+//   request_resp           String
+//   request_cdiff          String
+//   request_mrsa           String
+//   request_vre            String
+//   callout_status         String
+//   callout_outcome        String
+//   discharge_wardid       String
+//   acknowledge_status     String
+//   createtime             String
+//   updatetime             String
+//   acknowledgetime        String
+//   outcometime            String
+//   firstreservationtime   String
+//   currentreservationtime String
+// }
 
-model prompt {
-  id     Int      @id @unique @default(autoincrement())
-  prompt String   @db.Text
-  date   DateTime
-}
+// model caregivers {
+//   id          Int    @id @unique @default(autoincrement())
+//   row_id      String
+//   cgid        String
+//   label       String
+//   description String
+// }
 
-model response {
-  id                     Int     @id @unique @default(autoincrement())
-  run_id                 String
-  platform               String
-  model                  String
-  processing_time        Int
-  diagnostic_accuracy    Boolean
-  answer_followed_prompt Boolean
-  temperature            Int
-  error                  String
-}
+// model chartevents {
+//   id           Int    @id @unique @default(autoincrement())
+//   row_id       String
+//   subject_id   String
+//   hadm_id      String
+//   icustay_id   String
+//   itemid       String
+//   charttime    String
+//   storetime    String
+//   cgid         String
+//   value        String
+//   valuenum     String
+//   valueuom     String
+//   warning      String
+//   error        String
+//   resultstatus String
+//   stopped      String
+// }
+
+// model cptevents {
+//   id               Int    @id @unique @default(autoincrement())
+//   row_id           String
+//   subject_id       String
+//   hadm_id          String
+//   costcenter       String
+//   chartdate        String
+//   cpt_cd           String
+//   cpt_number       String
+//   cpt_suffix       String
+//   ticket_id_seq    String
+//   sectionheader    String
+//   subsectionheader String
+//   description      String
+// }
+
+// model d_cpt {
+//   id                  Int    @id @unique @default(autoincrement())
+//   row_id              String
+//   category            String
+//   sectionrange        String
+//   sectionheader       String
+//   subsectionrange     String
+//   subsectionheader    String
+//   codesuffix          String
+//   mincodeinsubsection String
+//   maxcodeinsubsection String
+// }
+
+// model d_icd_procedures {
+//   id          Int    @id @unique @default(autoincrement())
+//   row_id      String
+//   icd9_code   String
+//   short_title String
+//   long_title  String
+// }
+
+// model d_items {
+//   id           Int    @id @unique @default(autoincrement())
+//   row_id       String
+//   itemid       String
+//   label        String
+//   abbreviation String
+//   dbsource     String
+//   linksto      String
+//   category     String
+//   unitname     String
+//   param_type   String
+//   conceptid    String
+// }
+
+// model d_labitems {
+//   id         Int    @id @unique @default(autoincrement())
+//   row_id     String
+//   itemid     String
+//   label      String
+//   fluid      String
+//   category   String
+//   loinc_code String
+// }
+
+// model datetimeevents {
+//   id           Int    @id @unique @default(autoincrement())
+//   row_id       String
+//   subject_id   String
+//   hadm_id      String
+//   icustay_id   String
+//   itemid       String
+//   charttime    String
+//   storetime    String
+//   cgid         String
+//   value        String
+//   valueuom     String
+//   warning      String
+//   error        String
+//   resultstatus String
+//   stopped      String
+// }
+
+// model drgcodes {
+//   id            Int    @id @unique @default(autoincrement())
+//   row_id        String
+//   subject_id    String
+//   hadm_id       String
+//   drg_type      String
+//   drg_code      String
+//   description   String
+//   drg_severity  String
+//   drg_mortality String
+// }
+
+// model icustays {
+//   id             Int    @id @unique @default(autoincrement())
+//   row_id         String
+//   subject_id     String
+//   hadm_id        String
+//   icustay_id     String
+//   dbsource       String
+//   first_careunit String
+//   last_careunit  String
+//   first_wardid   String
+//   last_wardid    String
+//   intime         String
+//   outtime        String
+//   los            String
+// }
+
+// model inputevents_cv {
+//   id                Int    @id @unique @default(autoincrement())
+//   row_id            String
+//   subject_id        String
+//   hadm_id           String
+//   icustay_id        String
+//   charttime         String
+//   itemid            String
+//   amount            String
+//   amountuom         String
+//   rate              String
+//   rateuom           String
+//   storetime         String
+//   cgid              String
+//   orderid           String
+//   linkorderid       String
+//   stopped           String
+//   newbottle         String
+//   originalamount    String
+//   originalamountuom String
+//   originalroute     String
+//   originalrate      String
+//   originalrateuom   String
+//   originalsite      String
+// }
+
+// model inputevents_mv {
+//   id                            Int    @id @unique @default(autoincrement())
+//   row_id                        String
+//   subject_id                    String
+//   hadm_id                       String
+//   icustay_id                    String
+//   starttime                     String
+//   endtime                       String
+//   itemid                        String
+//   amount                        String
+//   amountuom                     String
+//   rate                          String
+//   rateuom                       String
+//   storetime                     String
+//   cgid                          String
+//   orderid                       String
+//   linkorderid                   String
+//   ordercategoryname             String
+//   secondaryordercategoryname    String
+//   ordercomponenttypedescription String
+//   ordercategorydescription      String
+//   patientweight                 String
+//   totalamount                   String
+//   totalamountuom                String
+//   isopenbag                     String
+//   continueinnextdept            String
+//   cancelreason                  String
+//   statusdescription             String
+//   comments_editedby             String
+//   comments_canceledby           String
+//   comments_date                 String
+//   originalamount                String
+//   originalrate                  String
+// }
+
+// model labevents {
+//   id         Int    @id @unique @default(autoincrement())
+//   row_id     String
+//   subject_id String
+//   hadm_id    String
+//   itemid     String
+//   charttime  String
+//   value      String
+//   valuenum   String
+//   valueuom   String
+//   flag       String
+// }
+
+// model microbiologyevents {
+//   id                  Int    @id @unique @default(autoincrement())
+//   row_id              String
+//   subject_id          String
+//   hadm_id             String
+//   chartdate           String
+//   charttime           String
+//   spec_itemid         String
+//   spec_type_desc      String
+//   org_itemid          String
+//   org_name            String
+//   isolate_num         String
+//   ab_itemid           String
+//   ab_name             String
+//   dilution_text       String
+//   dilution_comparison String
+//   dilution_value      String
+//   interpretation      String
+// }
+
+// model noteevents {
+//   id          Int    @id @unique @default(autoincrement())
+//   row_id      String
+//   subject_id  String
+//   hadm_id     String
+//   chartdate   String
+//   charttime   String
+//   storetime   String
+//   category    String
+//   description String
+//   cgid        String
+//   iserror     String
+//   text        String
+// }
+
+// model outputevents {
+//   id         Int    @id @unique @default(autoincrement())
+//   row_id     String
+//   subject_id String
+//   hadm_id    String
+//   icustay_id String
+//   charttime  String
+//   itemid     String
+//   value      String
+//   valueuom   String
+//   storetime  String
+//   cgid       String
+//   stopped    String
+//   newbottle  String
+//   iserror    String
+// }
+
+// model prescriptions {
+//   id                Int    @id @unique @default(autoincrement())
+//   row_id            String
+//   subject_id        String
+//   hadm_id           String
+//   icustay_id        String
+//   startdate         String
+//   enddate           String
+//   drug_type         String
+//   drug              String
+//   drug_name_poe     String
+//   drug_name_generic String
+//   formulary_drug_cd String
+//   gsn               String
+//   ndc               String
+//   prod_strength     String
+//   dose_val_rx       String
+//   dose_unit_rx      String
+//   form_val_disp     String
+//   form_unit_disp    String
+//   route             String
+// }
+
+// model procedureevents_mv {
+//   id                         Int    @id @unique @default(autoincrement())
+//   row_id                     String
+//   subject_id                 String
+//   hadm_id                    String
+//   icustay_id                 String
+//   starttime                  String
+//   endtime                    String
+//   itemid                     String
+//   value                      String
+//   valueuom                   String
+//   location                   String
+//   locationcategory           String
+//   storetime                  String
+//   cgid                       String
+//   orderid                    String
+//   linkorderid                String
+//   ordercategoryname          String
+//   secondaryordercategoryname String
+//   ordercategorydescription   String
+//   isopenbag                  String
+//   continueinnextdept         String
+//   cancelreason               String
+//   statusdescription          String
+//   comments_editedby          String
+//   comments_canceledby        String
+//   comments_date              String
+// }
+
+// model procedures_icd {
+//   id         Int    @id @unique @default(autoincrement())
+//   row_id     String
+//   subject_id String
+//   hadm_id    String
+//   seq_num    String
+//   icd9_code  String
+// }
+
+// model services {
+//   id           Int    @id @unique @default(autoincrement())
+//   row_id       String
+//   subject_id   String
+//   hadm_id      String
+//   transfertime String
+//   prev_service String
+//   curr_service String
+// }
+
+// model transfers {
+//   id            Int    @id @unique @default(autoincrement())
+//   row_id        String
+//   subject_id    String
+//   hadm_id       String
+//   icustay_id    String
+//   dbsource      String
+//   eventtype     String
+//   prev_careunit String
+//   curr_careunit String
+//   prev_wardid   String
+//   curr_wardid   String
+//   intime        String
+//   outtime       String
+//   los           String
+// }
