@@ -3,6 +3,7 @@
 
 import { Injectable } from '@nestjs/common';
 import Anthropic from '@anthropic-ai/sdk';
+import { TemperatureEnum } from '../@types/temperatureEnum';
 
 // MODELS
 // https://docs.anthropic.com/claude/docs/models-overview
@@ -28,15 +29,31 @@ export class ClaudeService {
   async runClaude(params: {
     model: ClaudeModel;
     prompt: string;
-    temperature: number;
+    temperature: TemperatureEnum;
   }) {
     try {
       const { model, prompt, temperature } = params;
 
+      let handleTemperature = 0;
+
+      switch (temperature) {
+        case TemperatureEnum.minimum:
+          handleTemperature = 0;
+          break;
+        case TemperatureEnum.half:
+          handleTemperature = 0.5;
+          break;
+        case TemperatureEnum.maximum:
+          handleTemperature = 1;
+          break;
+        default:
+          throw 'Error at Claude temperature';
+      }
+
       const msg = await this.anthropic.messages.create({
         model: model,
         max_tokens: 1000,
-        temperature,
+        temperature: handleTemperature,
         messages: [
           {
             role: 'user',
@@ -50,7 +67,13 @@ export class ClaudeService {
         ],
       });
 
-      return { message: msg.content[0].text, usage: msg.usage };
+      return {
+        message: msg.content[0].text,
+        usage: {
+          input_tokens: msg.usage.input_tokens,
+          output_tokens: msg.usage.output_tokens,
+        },
+      };
     } catch (error) {
       console.log(error);
     }

@@ -21,7 +21,7 @@ export class AdmissionService {
 
     return {
       ...admission,
-      diagnosticos: formatedIcd,
+      icd9_classification: formatedIcd.map((item) => item.long_title),
     };
   }
 }

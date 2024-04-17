@@ -29,10 +29,17 @@ model response {
   platform               String
   model                  String
   processing_time        Int
-  diagnostic_accuracy    Boolean
+  diagnostic_validation  Boolean
   answer_followed_prompt Boolean
-  temperature            Int
+  temperature            String
+  disagreement           String
+  disagreement_count     Int
   error                  String
+  likert                 Int
+  input_tokens           Int
+  output_tokens          Int
+  icd9_codes_count       Int
+  disagreement_rate      Float
 }
 
 model admissions {

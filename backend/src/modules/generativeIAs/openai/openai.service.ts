@@ -4,6 +4,7 @@
 
 import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
+import { TemperatureEnum } from '../@types/temperatureEnum';
 
 // MODELS
 //https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo
@@ -31,14 +32,30 @@ export class OpenaiService {
   async runOpenai(params: {
     model: OpenaiModel;
     prompt: string;
-    temperature: number;
+    temperature: TemperatureEnum;
   }) {
     try {
       const { model, prompt, temperature } = params;
 
+      let handleTemperature = 0;
+
+      switch (temperature) {
+        case TemperatureEnum.minimum:
+          handleTemperature = 0;
+          break;
+        case TemperatureEnum.half:
+          handleTemperature = 0.5;
+          break;
+        case TemperatureEnum.maximum:
+          handleTemperature = 1;
+          break;
+        default:
+          throw 'Error at Claude temperature';
+      }
+
       const openaiParams: OpenAI.Chat.ChatCompletionCreateParams = {
         model: model,
-        temperature,
+        temperature: handleTemperature,
         messages: [
           {
             role: 'user',
@@ -52,7 +69,10 @@ export class OpenaiService {
 
       return {
         message: chatCompletion.choices[0].message.content,
-        usage: chatCompletion.usage,
+        usage: {
+          input_tokens: chatCompletion.usage.prompt_tokens,
+          output_tokens: chatCompletion.usage.completion_tokens,
+        },
       };
     } catch (error) {
       console.log(error);

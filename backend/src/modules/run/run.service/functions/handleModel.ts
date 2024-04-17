@@ -1,6 +1,8 @@
-import { ModelEnum } from '../../@types/ModelEnum';
+import { ClaudeModel } from 'src/modules/generativeIAs/claude/claude.service';
+import { GeminiModel } from 'src/modules/generativeIAs/gemini/gemini.service';
+import { OpenaiModel } from 'src/modules/generativeIAs/openai/openai.service';
 
-export function handleModel(model: ModelEnum) {
+export function handleModel(model: ClaudeModel | OpenaiModel | GeminiModel) {
   const isOpenAi = model.search('gpt');
   const isGemini = model.search('gemini');
   const isClaude = model.search('claude');

@@ -7,6 +7,7 @@ import {
   HarmBlockThreshold,
   HarmCategory,
 } from '@google/generative-ai';
+import { TemperatureEnum } from '../@types/temperatureEnum';
 
 //MODELS
 //https://ai.google.dev/models/gemini?hl=pt-br
@@ -26,15 +27,31 @@ export class GeminiService {
   async runGemini(params: {
     model: GeminiModel;
     prompt: string;
-    temperature: number;
+    temperature: TemperatureEnum;
   }) {
     try {
       const { model, prompt, temperature } = params;
 
+      let handleTemperature = 0;
+
+      switch (temperature) {
+        case TemperatureEnum.minimum:
+          handleTemperature = 0;
+          break;
+        case TemperatureEnum.half:
+          handleTemperature = 0.5;
+          break;
+        case TemperatureEnum.maximum:
+          handleTemperature = 1;
+          break;
+        default:
+          throw 'Error at Gemini temperature';
+      }
+
       const geminiModel = this.genAI.getGenerativeModel({ model: model });
 
       const generationConfig = {
-        temperature,
+        temperature: handleTemperature,
         topK: 1,
         topP: 1,
         maxOutputTokens: 2048,
@@ -70,7 +87,10 @@ export class GeminiService {
 
       return {
         message: response.candidates[0].content.parts[0].text,
-        usage: 1,
+        usage: {
+          input_tokens: 0,
+          output_tokens: 0,
+        },
       };
     } catch (error) {
       console.log(error);
