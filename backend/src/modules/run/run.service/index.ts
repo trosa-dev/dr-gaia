@@ -32,10 +32,6 @@ export class RunService {
   ) {}
 
   async run(params: { run_id: string; temperature: TemperatureEnum }) {
-    async function delay(ms: number) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
-
     try {
       const { run_id, temperature } = params;
 
@@ -155,8 +151,6 @@ export class RunService {
             });
           }
         }
-
-        await delay(5000);
       }
     } catch (error) {
       console.log({ error: error });

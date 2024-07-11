@@ -11,14 +11,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     super();
   }
 
-  private sleep(): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 10000); // 5000 milliseconds = 5 seconds
-    });
-  }
-
   private readonly logger = new Logger('DrGaia');
 
   async onModuleInit() {
@@ -57,8 +49,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         this.logger.log('System is ready for use');
         return;
       }
-
-      await this.sleep();
 
       const countLoaders = await this.loader.count();
       if (countLoaders === 4) {

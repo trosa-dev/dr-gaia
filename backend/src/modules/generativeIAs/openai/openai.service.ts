@@ -17,6 +17,7 @@ export enum OpenaiModel {
   gpt_3_5_turbo_1106 = 'gpt-3.5-turbo-1106',
   gpt_3_5_turbo_0613 = 'gpt-3.5-turbo-0613',
   gpt_3_5_turbo_16k_0613 = 'gpt-3.5-turbo-16k-0613',
+  gpt_4o_2024_05_13 = 'gpt-4o-2024-05-13',
 }
 
 @Injectable()

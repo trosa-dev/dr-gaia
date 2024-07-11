@@ -5,6 +5,7 @@ import { GenerativeIAsModule } from './modules/generativeIAs/generativeIAs.modul
 import { PatientModule } from './modules/patient/patient.module';
 import { AdmissionModule } from './modules/admission/admission.module';
 import { RunModule } from './modules/run/run.module';
+import { AnalysisModule } from './modules/analysis/analysis.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { RunModule } from './modules/run/run.module';
     PatientModule,
     AdmissionModule,
     RunModule,
+    AnalysisModule,
   ],
   controllers: [],
   providers: [],

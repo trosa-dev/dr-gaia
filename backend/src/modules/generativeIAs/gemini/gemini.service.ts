@@ -14,6 +14,8 @@ import { TemperatureEnum } from '../@types/temperatureEnum';
 
 export enum GeminiModel {
   gemini_1_0_pro_001 = 'gemini-1.0-pro-001',
+  gemini_1_5_pro_001 = 'gemini-1.5-pro-001',
+  gemini_1_5_flash_001 = 'gemini-1.5-flash-001',
 }
 
 @Injectable()
